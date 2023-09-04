@@ -1,4 +1,4 @@
-package uz.pdp.cityfront.config.controller;
+package uz.pdp.cityfront.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,8 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/fr")
 @RequiredArgsConstructor
 public class AuthController {
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
+
 }
