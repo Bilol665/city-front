@@ -6,9 +6,25 @@ spring:
     application:
         name: FRONT-END
 
+    datasource:
+        username: postgres
+        password: 1402
+        url: jdbc:postgresql://localhost:5433/city_front
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+
 eureka:
     client:
         service-url:
             defaultUrl: ${EUREKA.URI:http://localhost:8761/eureka/}
         instance:
             preferIpAddress: true
+
+services:
+    user-service: http://USER-SERVICE/user
+

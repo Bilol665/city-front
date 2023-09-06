@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="indexCss.css">
     <style>
         .button {
             border: 1px solid gray;
@@ -243,9 +242,9 @@
 <div class="center">
     <h3 class="login">Login</h3>
     <hr>
-    <form action="${pageContext.request.contextPath}/sign-in" method="post" class="registration">
-        <label for="username">
-            <input type="text" id="username" name="username" placeholder="username">
+    <form action="/login" method="post" class="registration">
+        <label for="email">
+            <input type="text" id="email" name="email" placeholder="email">
         </label>
         <label for="password">
             <input type="password" id="password" name="password" placeholder="password">
@@ -255,7 +254,7 @@
 <!--    <h3 style="color: red">-->
 <!--        <c:if test="${message != null}">${message}</c:if>-->
 <!--    </h3>-->
-    <p>Don't have an account? <a href="${pageContext.request.contextPath}/sign-up">Register</a></p>
+    <p>Don't have an account? <a href="/sign-up">Register</a></p>
 
 </div>
 </body>
