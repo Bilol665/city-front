@@ -4,258 +4,241 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <style>
-        .button {
-            border: 1px solid gray;
-            border-radius: 5px;
-            background: darkcyan;
-            font-size: 16px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            font-weight: bold;
-            width: 100px;
-            height: 30px;
-            margin: 0;
-            position: relative;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-        .admin-side {
-            margin-top: 50px;
-            margin-left: 50px;
-            width: 100%;
-            height: 100%;
-            display: inline-block;
-        }
-        .addition{
-            width: 700px;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        #header{
-            margin-left: -10px;
-            margin-top: -10px;
-            background-color: darkcyan;
-            width: 100%;
-            font-family: sans-serif;
-            padding: 15px 30px;
-        }
-        .Bilol{
-            background-color: darkcyan;
-            border: 0;
-            width: auto;
-            height: 50px;
-            text-size-adjust: inherit;
-        }
-        .Bilol:hover {
-            background-color: aqua;
-            border: 5px  darkcyan;
-            border-radius: 5px;
-        }
-        .holder {
-            background-color: darkcyan;
-            width: 11.3%;
-            padding: 5px 30px;
-            display: inline-block;
-            float: left;
-        }
-        div {
-            align-items: center;
-            justify-content: center;
-        }
-        .table thead{
-            background-color: darkgrey;
-        }
-
-        .table tbody tr td{
-            border: 1px solid gray;
-        }
-        .table {
-            border: 1px solid gray;
-            width: 90%;
-        }
-
         body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-            margin: 0;
+            margin-top: 450px;
         }
-
-        .login {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin: 10px auto;
-            max-width: 200px;
-            padding: 10px;
-            align-content: center;
-            text-align: center;
+        .wrapper {
+            --input-focus: #2d8cf0;
+            --font-color: #323232;
+            --font-color-sub: #666;
+            --bg-color: #fff;
+            --bg-color-alt: #666;
+            --main-color: #323232;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
         }
-        .center {
-            margin: auto;
-            width: 20%;
-            border: 3px solid #333333;
-            padding: 10px;
+        /* switch card */
+        .switch {
+            transform: translateY(-200px);
             position: relative;
-            background-color: white;
-        }
-        h1 {
-            color: #333333;
-            font-size: 24px;
-            margin-bottom: 30px;
-
-        }
-
-        form.registration {
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 50px;
+            height: 20px;
         }
 
-        label {
-            color: #333333;
-            font-size: 16px;
-            margin-bottom: 10px;
-            text-align: center;
+        .card-side::before {
+            position: absolute;
+            content: 'Log in';
+            left: -70px;
+            top: 0;
+            width: 100px;
+            text-decoration: underline;
+            color: var(--font-color);
+            font-weight: 600;
         }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="password"],
-        #product_description{
-            background-color: #f2f2f2;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        .submit {
-            background-color: #333333;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #ffffff;
-            font-size: 16px;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #666666;
-        }
-        .head {
-            background-color: darkcyan;
-            width: 100%;
-            height: 80px;
-        }
-
-        .bilol1{
-            margin-left: 80px;
-        }
-        .head::after {
-            content: '';
-            display: table;
-            clear: both;
-            width: 100%;
-            height: 80px;
-        }
-        .bilol-button {
-            float: left;
-            background-color: darkcyan;
-            color: aqua;
+        .card-side::after {
+            position: absolute;
+            content: 'Sign up';
+            left: 70px;
+            top: 0;
+            width: 100px;
             text-decoration: none;
-            text-transform: uppercase;
-            border: 0;
-            padding-top: 30px;
-            font-size: 18px;
+            color: var(--font-color);
+            font-weight: 600;
+        }
+
+        .toggle {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 2px solid var(--main-color);
+            box-shadow: 4px 4px var(--main-color);
+            position: absolute;
             cursor: pointer;
-            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-color);
+            transition: 0.3s;
         }
-        .bilol-button:hover {
-            color: black;
-            border-radius: 10%;
-        }
-        .navigation1 {
-            float: right;
-            margin-right: 100px;
-        }
-        .navigation1 ul{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .navigation1 li{
-            display: inline-block;
-            margin: 0 70px;
-            position: relative;
-        }
-        .navigation1 ul li a{
-            color: aqua;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-        .navigation1 ul li a:hover {
-            color: black;
 
-        }
-        .bilol-button::before{
-            content: '';
-            display: block;
-            height: 5px;
-            background-color: black;
+        .slider:before {
+            box-sizing: border-box;
             position: absolute;
-            top: 0;
-            width: 0;
-            border-radius: 25%;
-            transition: all ease-in-out 250ms;
+            content: "";
+            height: 20px;
+            width: 20px;
+            border: 2px solid var(--main-color);
+            border-radius: 5px;
+            left: -2px;
+            bottom: 2px;
+            background-color: var(--bg-color);
+            box-shadow: 0 3px 0 var(--main-color);
+            transition: 0.3s;
         }
-        .bilol-button:hover::before {
-            width: 100%;
+
+        .toggle:checked + .slider {
+            background-color: var(--input-focus);
         }
-        .navigation1 a::before {
-            content: '';
-            display: block;
-            height: 5px;
-            background-color: black;
+
+        .toggle:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .toggle:checked ~ .card-side:before {
+            text-decoration: none;
+        }
+
+        .toggle:checked ~ .card-side:after {
+            text-decoration: underline;
+        }
+
+        /* card */
+
+        .flip-card__inner {
+            width: 300px;
+            height: 350px;
+            position: relative;
+            background-color: transparent;
+            perspective: 1000px;
+            /* width: 100%;
+            height: 100%; */
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .toggle:checked ~ .flip-card__inner {
+            transform: rotateY(180deg);
+        }
+
+        .toggle:checked ~ .flip-card__front {
+            box-shadow: none;
+        }
+
+        .flip-card__front, .flip-card__back {
+            padding: 20px;
             position: absolute;
-            top: 0;
-            width: 0;
-            border-radius: 25%;
-            transition: all ease-in-out 250ms;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            background: lightgrey;
+            gap: 20px;
+            border-radius: 5px;
+            border: 2px solid var(--main-color);
+            box-shadow: 4px 4px var(--main-color);
         }
-        .navigation1 a:hover::before {
+
+        .flip-card__back {
             width: 100%;
+            transform: rotateY(180deg);
         }
-        .somethings {
-            width: 90px;
+
+        .flip-card__form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
-        .delete-button-form {
-            margin: 0;
-            padding: 0;
+
+        .title {
+            margin: 20px 0 20px 0;
+            font-size: 25px;
+            font-weight: 900;
+            text-align: center;
+            color: var(--main-color);
+        }
+
+        .flip-card__input {
+            width: 250px;
+            height: 40px;
+            border-radius: 5px;
+            border: 2px solid var(--main-color);
+            background-color: var(--bg-color);
+            box-shadow: 4px 4px var(--main-color);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--font-color);
+            padding: 5px 10px;
+            outline: none;
+        }
+
+        .flip-card__input::placeholder {
+            color: var(--font-color-sub);
+            opacity: 0.8;
+        }
+
+        .flip-card__input:focus {
+            border: 2px solid var(--input-focus);
+        }
+
+        .flip-card__btn:active, .button-confirm:active {
+            box-shadow: 0px 0px var(--main-color);
+            transform: translate(3px, 3px);
+        }
+
+        .flip-card__btn {
+            margin: 20px 0 20px 0;
+            width: 120px;
+            height: 40px;
+            border-radius: 5px;
+            border: 2px solid var(--main-color);
+            background-color: var(--bg-color);
+            box-shadow: 4px 4px var(--main-color);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--font-color);
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-<div class="center">
-    <h3 class="login">Login</h3>
-    <hr>
-    <form action="/login" method="post" class="registration">
-        <label for="email">
-            <input type="text" id="email" name="email" placeholder="email">
-        </label>
-        <label for="password">
-            <input type="password" id="password" name="password" placeholder="password">
-        </label>
-        <button class="submit">Submit</button>
-    </form>
-<!--    <h3 style="color: red">-->
-<!--        <c:if test="${message != null}">${message}</c:if>-->
-<!--    </h3>-->
-    <p>Don't have an account? <a href="/sign-up">Register</a></p>
+<!--<div class="center">-->
+    <div class="wrapper">
+        <div class="card-switch">
+            <label class="switch">
+                <input class="toggle" type="checkbox">
+                <span class="slider"></span>
+                <span class="card-side"></span>
+                <div class="flip-card__inner">
+                    <div class="flip-card__front">
+                        <div class="title">Log in</div>
+                        <form action="/login" method="post" class="flip-card__form">
+                            <input type="email" placeholder="Email" name="email" class="flip-card__input">
+                            <input type="password" placeholder="Password" name="password" class="flip-card__input">
+                            <button class="flip-card__btn">Let`s go!</button>
+                        </form>
+                        <h3 style="color: red" th:if="${message!=null}" th:text="${message}"></h3>
+                    </div>
+                    <div class="flip-card__back">
+                        <div class="title">Sign up</div>
+                        <form action="/sign-up" method="post" class="flip-card__form">
+                            <input type="text" name="name" placeholder="Name" class="flip-card__input">
+                            <input type="email" placeholder="Email" name="email" class="flip-card__input">
+                            <input type="password" placeholder="Password" name="password" class="flip-card__input">
+                            <button class="flip-card__btn">Confirm!</button>
+                            <h3 style="color: red" th:if="${message!=null}" th:text="${message}"></h3>
+                        </form>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
 
-</div>
+<!--</div>-->
 </body>
 </html>

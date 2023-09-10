@@ -18,13 +18,7 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
 
-eureka:
-    client:
-        service-url:
-            defaultUrl: ${EUREKA.URI:http://localhost:8761/eureka/}
-        instance:
-            preferIpAddress: true
 
 services:
-    user-service: http://USER-SERVICE/user
+    user-service: http://localhost:8084/user
 
