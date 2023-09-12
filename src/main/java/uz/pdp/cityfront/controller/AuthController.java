@@ -3,7 +3,6 @@ package uz.pdp.cityfront.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +37,8 @@ public class AuthController {
         return "/auth/signUp";
     }
     @PostMapping("/sign-up")
-    public String signUp(UserRequestDto userRequestDto, BindingResult bindingResult,Model model){
-        UserReadDto userReadDto = userService.signUp(userRequestDto, bindingResult);
+    public String signUp(UserRequestDto userRequestDto, Model model){
+        UserReadDto userReadDto = userService.signUp(userRequestDto);
         model.addAttribute("userId",userReadDto.getId());
         return "/auth/VerificationPage";
     }

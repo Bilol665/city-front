@@ -20,5 +20,5 @@ spring:
 
 
 services:
-    user-service: http://localhost:8084/user
+    user-service: http://localhost:8080/user
 

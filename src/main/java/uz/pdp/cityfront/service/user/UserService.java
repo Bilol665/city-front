@@ -7,14 +7,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import uz.pdp.cityfront.domain.dto.LoginDto;
-import uz.pdp.cityfront.domain.dto.VerificationDto;
-import uz.pdp.cityfront.domain.dto.reader.UserReadDto;
 import uz.pdp.cityfront.domain.dto.UserRequestDto;
+import uz.pdp.cityfront.domain.dto.VerificationDto;
 import uz.pdp.cityfront.domain.dto.reader.JwtResponse;
+import uz.pdp.cityfront.domain.dto.reader.UserReadDto;
 import uz.pdp.cityfront.domain.dto.response.ApiResponse4Jwt;
 import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
@@ -56,7 +55,7 @@ public class UserService {
         }
     }
 
-    public UserReadDto signUp(UserRequestDto userRequestDto, BindingResult bindingResult) {
+    public UserReadDto signUp(UserRequestDto userRequestDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/sign-up");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -87,5 +86,12 @@ public class UserService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, UserReadDto.class).getBody();
+    }
+    private JwtResponse refreshJwt(LoginDto loginDto) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/login");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto, headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, JwtResponse.class).getBody();
     }
 }
