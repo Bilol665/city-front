@@ -187,13 +187,13 @@
         }
 
         .flip-card__btn:active, .button-confirm:active {
-            box-shadow: 0px 0px var(--main-color);
+            box-shadow: 0 0 var(--main-color);
             transform: translate(3px, 3px);
         }
 
         .flip-card__btn {
-            margin: 20px 0 20px 0;
-            width: 120px;
+            margin: 0 0 0 0;
+            width: fit-content;
             height: 40px;
             border-radius: 5px;
             border: 2px solid var(--main-color);
@@ -207,7 +207,6 @@
     </style>
 </head>
 <body>
-<!--<div class="center">-->
     <div class="wrapper">
         <div class="card-switch">
             <label class="switch">
@@ -219,7 +218,9 @@
                         <div class="title">Log in</div>
                         <form action="/login" method="post" class="flip-card__form">
                             <input type="email" placeholder="Email" name="email" class="flip-card__input">
-                            <input type="password" placeholder="Password" name="password" class="flip-card__input">
+                            <input id="myInput" type="password" placeholder="Password" name="password" class="flip-card__input">
+                            <input class="flip-card__btn" type="button" onclick="myFunction()" value="Show/Hide password">
+                            <a href="/resetPassword">Reset password</a>
                             <button class="flip-card__btn">Let`s go!</button>
                         </form>
                         <h3 style="color: red" th:if="${message!=null}" th:text="${message}"></h3>
@@ -238,7 +239,15 @@
             </label>
         </div>
     </div>
-
-<!--</div>-->
+    <script>
+        function myFunction() {
+            const x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
