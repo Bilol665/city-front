@@ -49,7 +49,7 @@ public class UserService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto,headers);
         try {
-            JwtResponse body = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, JwtResponse.class).getBody();
+            JwtResponse body = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtResponse.class).getBody();
             assert body != null;
             JwtTokenEntity token = JwtTokenEntity.builder()
                     .username(loginDto.getEmail())
