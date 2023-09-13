@@ -35,10 +35,6 @@ public class AuthController {
         }
         return "MainPage";
     }
-    @GetMapping ("/sign-up")
-    public String signUp() {
-        return "/auth/signUp";
-    }
     @PostMapping("/sign-up")
     public String signUp(UserRequestDto userRequestDto, Model model){
         UserReadDto userReadDto = userService.signUp(userRequestDto);
