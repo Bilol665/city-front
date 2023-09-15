@@ -93,7 +93,7 @@ public class UserService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, UserReadDto.class).getBody();
     }
-    public UserReadDto getUserById(String username) {
+    public UserReadDto getUserByUserName(String username) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/get/user")
                 .queryParam("username", username);
         HttpHeaders headers = new HttpHeaders();

@@ -20,9 +20,9 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-public class AuthController {
+public class    AuthController {
     private final UserService userService;
-    @PostMapping("/login")
+    @PostMapping("/login" )
     public String login(
             LoginDto loginDto,
             Model model
@@ -71,4 +71,5 @@ public class AuthController {
         userService.reset(email,password);
         return "/MainPage";
     }
+
 }
