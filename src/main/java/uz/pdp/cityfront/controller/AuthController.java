@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-public class    AuthController {
+public class AuthController {
     private final UserService userService;
     @PostMapping("/login" )
     public String login(
@@ -28,6 +28,7 @@ public class    AuthController {
             Model model
     ) {
         try {
+            userService.refreshJwtToken(loginDto);
             userService.login(loginDto);
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());

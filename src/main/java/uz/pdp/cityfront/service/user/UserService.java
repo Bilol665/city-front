@@ -108,6 +108,13 @@ public class UserService {
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto, headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, JwtResponse.class).getBody();
     }
+    public JwtTokenEntity refreshJwtToken(LoginDto loginDto) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/login");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto, headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtTokenEntity.class).getBody();
+    }
     public void sendReset(String email) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/reset-password/" + email);
         HttpHeaders headers = new HttpHeaders();
@@ -130,5 +137,12 @@ public class UserService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ResetPasswordDto> entity = new HttpEntity<>(password,headers);
         restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, ApiResponse.class);
+    }
+    
+    public void updateJWT(LoginDto loginDto){
+        JwtTokenEntity oldJwt = jwtTokenRepository.findJwtTokenEntitiesByUsername(loginDto.getEmail());
+        JwtTokenEntity newJwt = refreshJwtToken(loginDto);
+        jwtTokenRepository.delete(oldJwt);
+        jwtTokenRepository.save(newJwt);
     }
 }
