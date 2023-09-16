@@ -28,9 +28,10 @@ public class PaymentController {
     }
     @PostMapping("/saveCard")
     public String save(
-             CreateCardDto createCardDto
+             CreateCardDto createCardDto,
+             Principal principal
     ){
-    paymentService.save(createCardDto);
+    paymentService.save(createCardDto,principal);
     return "MainPage";
     }
 }

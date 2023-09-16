@@ -30,14 +30,15 @@ public class PaymentService {
     @Value("${services.user-service}")
     private String userUrl;
 
-    public CardReadDto save(CreateCardDto createCardDto) {
+    public CardReadDto save(CreateCardDto createCardDto,Principal principal) {
         UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(userUrl + "/api/v1/payment/save");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<CreateCardDto> entity = new HttpEntity<>(createCardDto, headers);
 
-        headers.set("authorization","Bearer " +"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkaWxzaG9kb3ZmYXpsaWRkaW5AZ21haWwuY29tIiwiaWF0IjoxNjk0NzgxMjc3LCJleHAiOjE2OTQ4MTEyNzcsInJvbGVzIjpbIlJPTEVfVVNFUiJdfQ.E1xNoUCxzm-z7lQvRBovjTTRJ4ivORfJSQ0i1ImadbUX8aNqIksGrokxBnF0lPy9wkDv9rE768Dbetxhn158Sw");
+        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName());
+        headers.set("authorization","Bearer " + token.getToken());
 
         try {
             return restTemplate.exchange(uri.toUriString(),HttpMethod.POST,entity,CardReadDto.class).getBody();
