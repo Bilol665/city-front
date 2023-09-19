@@ -3,10 +3,7 @@ package uz.pdp.cityfront.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.cityfront.domain.dto.LoginDto;
 import uz.pdp.cityfront.domain.dto.ResetPasswordDto;
 import uz.pdp.cityfront.domain.dto.UserRequestDto;
@@ -20,6 +17,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
     @PostMapping("/login" )
@@ -36,11 +34,14 @@ public class AuthController {
         }
         return "MainPage";
     }
-    @PostMapping("/sign-up")
-    public String signUp(UserRequestDto userRequestDto, Model model){
+    @PostMapping("/register")
+    public String signUp(
+            @ModelAttribute UserRequestDto userRequestDto,
+            Model model
+    ){
         UserReadDto userReadDto = userService.signUp(userRequestDto);
         model.addAttribute("userId",userReadDto.getId());
-        return "/auth/VerificationPage";
+        return "verification";
     }
     @GetMapping("/verify/{userId}")
     public String verifyGet(@PathVariable UUID userId,Model model)  {
