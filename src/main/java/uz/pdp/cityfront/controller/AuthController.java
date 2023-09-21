@@ -39,9 +39,14 @@ public class AuthController {
             @ModelAttribute UserRequestDto userRequestDto,
             Model model
     ){
-        UserReadDto userReadDto = userService.signUp(userRequestDto);
-        model.addAttribute("userId",userReadDto.getId());
-        return "verification";
+        try {
+            UserReadDto userReadDto = userService.signUp(userRequestDto);
+            model.addAttribute("userId",userReadDto.getId());
+            return "verification";
+        }catch (Exception e){
+            return "index_email_error";
+        }
+
     }
     @GetMapping("/verify/{userId}")
     public String verifyGet(@PathVariable UUID userId,Model model)  {
