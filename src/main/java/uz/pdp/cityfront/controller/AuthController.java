@@ -32,7 +32,7 @@ public class AuthController {
             model.addAttribute("message",e.getMessage());
             return "index";
         }
-        return "MainPage";
+        return "index";
     }
     @PostMapping("/register")
     public String signUp(
