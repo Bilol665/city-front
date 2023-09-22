@@ -54,9 +54,15 @@ public class AuthController {
         return "/auth/VerificationPage";
     }
     @PostMapping("/verify")
-    public String verify(VerificationDto verificationDto) {
-        userService.verify(verificationDto);
-        return "MainPage";
+    public String verify(
+            @ModelAttribute VerificationDto verificationDto
+    ) {
+        try {
+            userService.verify(verificationDto);
+        }catch (Exception e){
+            return "index_verification_error";
+        }
+        return "index";
     }
     @GetMapping("/resetPassword")
     public String resetPassword() {
