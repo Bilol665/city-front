@@ -8,6 +8,6 @@ import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import java.util.UUID;
 
 @Repository
-public interface JwtTokenRepository extends JpaRepository<JwtTokenEntity, String> {
+public interface JwtTokenRepository extends JpaRepository<JwtTokenEntity, UUID> {
     JwtTokenEntity findJwtTokenEntitiesByUsername(String username);
 }
