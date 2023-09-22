@@ -12,6 +12,6 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 public class VerificationDto {
-    private UUID userId;
+    private String userId;
     private String code;
 }

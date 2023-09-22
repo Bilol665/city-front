@@ -81,7 +81,7 @@ public class UserService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ApiResponse4Jwt> entity = new HttpEntity<>(headers);
         ApiResponse4Jwt response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ApiResponse4Jwt.class).getBody();
-        UserReadDto user = getUserById(verificationDto.getUserId());
+        UserReadDto user = getUserById(UUID.fromString(verificationDto.getUserId()));
         assert response != null;
         jwtTokenRepository.save(JwtTokenEntity.builder().username(user.getEmail()).token(response.getData().getAccessToken()).build());
     }

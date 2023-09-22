@@ -1,6 +1,6 @@
 
 server:
-    port: 8085
+    port: 8081
 
 spring:
     application:
@@ -8,8 +8,8 @@ spring:
 
     datasource:
         username: postgres
-        password: 1402
-        url: jdbc:postgresql://localhost:5433/city_front
+        password: 1234
+        url: jdbc:postgresql://localhost:5432/city_management_monolith
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate:
