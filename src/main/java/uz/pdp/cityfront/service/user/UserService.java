@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import uz.pdp.cityfront.domain.dto.LoginDto;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
     private final RestTemplate restTemplate;
     private final JwtTokenRepository jwtTokenRepository;
@@ -138,11 +140,15 @@ public class UserService {
         HttpEntity<ResetPasswordDto> entity = new HttpEntity<>(password,headers);
         restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, ApiResponse.class);
     }
-    
+
     public void updateJWT(LoginDto loginDto){
         JwtTokenEntity oldJwt = jwtTokenRepository.findJwtTokenEntitiesByUsername(loginDto.getEmail());
         JwtTokenEntity newJwt = refreshJwtToken(loginDto);
-        jwtTokenRepository.delete(oldJwt);
-        jwtTokenRepository.save(newJwt);
+        if (oldJwt==null){
+            jwtTokenRepository.save(newJwt);
+        }else {
+            jwtTokenRepository.delete(oldJwt);
+            jwtTokenRepository.save(newJwt);
+        }
     }
 }

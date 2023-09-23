@@ -26,7 +26,7 @@ public class AuthController {
             Model model
     ) {
         try {
-            userService.refreshJwtToken(loginDto);
+            userService.updateJWT(loginDto);
             userService.login(loginDto);
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());
