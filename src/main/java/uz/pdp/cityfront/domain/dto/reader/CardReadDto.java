@@ -14,7 +14,8 @@ import lombok.Setter;
 public class CardReadDto {
     private String number;
     private String holderName;
-    private Integer expiredDate;
+    private Integer month;
+    private Integer year;
     private Integer pinCode;
     private String type;
 }
