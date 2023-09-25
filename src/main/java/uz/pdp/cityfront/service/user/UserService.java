@@ -37,7 +37,7 @@ public class UserService {
     @Value("${services.user-service}")
     private String userServiceUrl;
 
-    public void login(LoginDto loginDto) {
+    public JwtTokenEntity login(LoginDto loginDto) {
         if((loginDto.getEmail() == null || loginDto.getEmail().isBlank())
                 && (loginDto.getPassword() == null || loginDto.getPassword().isBlank())) {
             throw new MyException("Email and password is missing!");
@@ -50,17 +50,13 @@ public class UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto,headers);
-        try {
-            JwtResponse body = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtResponse.class).getBody();
-            assert body != null;
-            JwtTokenEntity token = JwtTokenEntity.builder()
-                    .username(loginDto.getEmail())
-                    .token(body.getAccessToken())
-                    .build();
-            jwtTokenRepository.save(token);
-        }catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        JwtResponse body = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtResponse.class).getBody();
+        assert body != null;
+        JwtTokenEntity token = JwtTokenEntity.builder()
+                .username(loginDto.getEmail())
+                .token(body.getAccessToken())
+                .build();
+        return jwtTokenRepository.save(token);
     }
 
     public UserReadDto signUp(UserRequestDto userRequestDto) {
@@ -75,7 +71,7 @@ public class UserService {
         }
     }
 
-    public void verify(VerificationDto verificationDto) {
+    public JwtTokenEntity verify(VerificationDto verificationDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/verify/"
                 + verificationDto.getUserId()
                 + "/" + verificationDto.getCode());
@@ -85,7 +81,7 @@ public class UserService {
         ApiResponse4Jwt response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ApiResponse4Jwt.class).getBody();
         UserReadDto user = getUserById(UUID.fromString(verificationDto.getUserId()));
         assert response != null;
-        jwtTokenRepository.save(JwtTokenEntity.builder().username(user.getEmail()).token(response.getData().getAccessToken()).build());
+        return jwtTokenRepository.save(JwtTokenEntity.builder().username(user.getEmail()).token(response.getData().getAccessToken()).build());
     }
     public UserReadDto getUserById(UUID id) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/get/id")
@@ -133,22 +129,23 @@ public class UserService {
         return map;
     }
 
-    public void reset(String email, ResetPasswordDto password) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/changePassword/" + email);
+    public void changePassword(String email, ResetPasswordDto password,String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/edit/changePassword/" + email);
         HttpHeaders headers = new HttpHeaders();
+        headers.add("authorization","Bearer "+token);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ResetPasswordDto> entity = new HttpEntity<>(password,headers);
         restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, ApiResponse.class);
     }
 
-    public void updateJWT(LoginDto loginDto){
+    public JwtTokenEntity updateJWT(LoginDto loginDto){
         JwtTokenEntity oldJwt = jwtTokenRepository.findJwtTokenEntitiesByUsername(loginDto.getEmail());
         JwtTokenEntity newJwt = refreshJwtToken(loginDto);
         if (oldJwt==null){
-            jwtTokenRepository.save(newJwt);
+            return jwtTokenRepository.save(newJwt);
         }else {
             jwtTokenRepository.delete(oldJwt);
-            jwtTokenRepository.save(newJwt);
+            return jwtTokenRepository.save(newJwt);
         }
     }
 }

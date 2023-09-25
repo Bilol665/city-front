@@ -9,11 +9,11 @@ import uz.pdp.cityfront.domain.dto.ResetPasswordDto;
 import uz.pdp.cityfront.domain.dto.UserRequestDto;
 import uz.pdp.cityfront.domain.dto.VerificationDto;
 import uz.pdp.cityfront.domain.dto.reader.UserReadDto;
+import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.service.user.UserService;
 
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,11 +26,12 @@ public class AuthController {
             Model model
     ) {
         try {
-            userService.updateJWT(loginDto);
-            userService.login(loginDto);
+            JwtTokenEntity login = userService.login(loginDto);
+            model.addAttribute("email",loginDto.getEmail());
+            model.addAttribute("token",login.getToken());
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());
-            return "index";
+            return "index_password_error";
         }
         return "menu";
     }
@@ -48,21 +49,19 @@ public class AuthController {
         }
 
     }
-    @GetMapping("/verify/{userId}")
-    public String verifyGet(@PathVariable UUID userId,Model model)  {
-        model.addAttribute("userId",userId);
-        return "/auth/VerificationPage";
-    }
     @PostMapping("/verify")
     public String verify(
-            @ModelAttribute VerificationDto verificationDto
+            @ModelAttribute VerificationDto verificationDto,
+            Model model
     ) {
         try {
-            userService.verify(verificationDto);
+            JwtTokenEntity verify = userService.verify(verificationDto);
+            model.addAttribute("email",verify.getUsername());
+            model.addAttribute("token",verify.getToken());
         }catch (Exception e){
             return "index_verification_error";
         }
-        return "index";
+        return "menu";
     }
     @GetMapping("/resetPassword")
     public String resetPassword() {
@@ -79,10 +78,29 @@ public class AuthController {
         model.addAttribute("email",map.get("email"));
         return map.get("path");
     }
-    @PostMapping("/password-reset")
-    public String password(@RequestParam String email, ResetPasswordDto password) {
-        userService.reset(email,password);
-        return "/MainPage";
+    @PostMapping("/changePassword")
+    public String password(
+            ResetPasswordDto resetPasswordDto,
+            Model model
+    ) {
+        try {
+            userService.changePassword(resetPasswordDto.getEmail(),resetPasswordDto,resetPasswordDto.getToken());
+            model.addAttribute("token",resetPasswordDto.getToken());
+        }catch (Exception e){
+            return "index_password_error";
+        }
+        return "index";
+    }
+
+    @GetMapping("/getPage/changePassword/{email}/{token}")
+    public String getPagePassword(
+            @PathVariable String email,
+            @PathVariable String token,
+            Model model
+    ){
+        model.addAttribute("email",email);
+        model.addAttribute("token",token);
+        return "changePassword";
     }
 
 }
