@@ -10,18 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import uz.pdp.cityfront.domain.dto.user.LoginDto;
-import uz.pdp.cityfront.domain.dto.user.ResetPasswordDto;
-import uz.pdp.cityfront.domain.dto.user.UserRequestDto;
-import uz.pdp.cityfront.domain.dto.user.VerificationDto;
 import uz.pdp.cityfront.domain.dto.reader.JwtResponse;
-import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.domain.dto.response.ApiResponse;
 import uz.pdp.cityfront.domain.dto.response.ApiResponse4Jwt;
+import uz.pdp.cityfront.domain.dto.user.*;
 import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.repository.JwtTokenRepository;
-import uz.pdp.cityfront.service.mail.MailService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +28,6 @@ import java.util.UUID;
 public class UserService {
     private final RestTemplate restTemplate;
     private final JwtTokenRepository jwtTokenRepository;
-    private final MailService mailService;
     @Value("${services.user-service}")
     private String userServiceUrl;
 
