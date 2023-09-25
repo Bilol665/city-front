@@ -30,14 +30,14 @@ public class PaymentService {
     @Value("${services.user-service}")
     private String userUrl;
 
-    public CardReadDto save(CreateCardDto createCardDto) {
+    public CardReadDto save(CreateCardDto createCardDto,Principal principal) {
         UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(userUrl + "payment/api/v1/card/save");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<CreateCardDto> entity = new HttpEntity<>(createCardDto, headers);
 
-        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername("dilshodovfazliddin@gmail.com");
+        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName());
         headers.set("authorization","Bearer " + token.getToken());
 
         try {
