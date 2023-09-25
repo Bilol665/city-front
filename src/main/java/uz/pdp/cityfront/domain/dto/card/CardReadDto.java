@@ -1,4 +1,4 @@
-package uz.pdp.cityfront.domain.dto.reader;
+package uz.pdp.cityfront.domain.dto.card;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -6,16 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserReadDto {
-    private UUID id;
-    private String name;
-    private String email;
-
+public class CardReadDto {
+    private String number;
+    private String holderName;
+    private Integer expiredDate;
+    private Integer pinCode;
+    private String type;
 }

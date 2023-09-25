@@ -7,19 +7,13 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import uz.pdp.cityfront.domain.dto.LoginDto;
-import uz.pdp.cityfront.domain.dto.reader.CardReadDto;
-import uz.pdp.cityfront.domain.dto.reader.CreateCardDto;
-import uz.pdp.cityfront.domain.dto.reader.JwtResponse;
-import uz.pdp.cityfront.domain.dto.reader.UserReadDto;
+import uz.pdp.cityfront.domain.dto.card.CardReadDto;
 import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
+import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.repository.JwtTokenRepository;
 import uz.pdp.cityfront.service.user.UserService;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 
 @Service
@@ -35,9 +29,9 @@ public class PaymentService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<CreateCardDto> entity = new HttpEntity<>(createCardDto, headers);
+        HttpEntity<CardReadDto> entity = new HttpEntity<>(createCardDto, headers);
 
-        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName());
+        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName()).orElseThrow(() -> new MyException("Jwt not found!"));
         headers.set("authorization","Bearer " + token.getToken());
 
         try {

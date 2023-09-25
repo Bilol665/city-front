@@ -1,4 +1,4 @@
-package uz.pdp.cityfront.domain.dto;
+package uz.pdp.cityfront.domain.dto.user;
 
 import lombok.*;
 
