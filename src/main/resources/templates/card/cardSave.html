@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Card</title>
+</head>
+<body>
+<form class="credit-card" action="/saveCard" method="post">
+    <div class="form-header">
+        <h4 class="title">Bank card detail</h4>
+    </div>
+
+    <div class="form-body">
+        <!-- Card Number -->
+        <input name="holderName" type="text" class="card-number"  required placeholder="Card Holder">
+        <input name="number" type="text" class="card-number" required placeholder="Card Number">
+
+        <!-- Date Field -->
+        <div class="date-field">
+            <div class="month">
+                <select name="month">
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="year">
+                <select name="year">
+                    <option value="23">2023</option>
+                    <option value="24">2024</option>
+                    <option value="25">2025</option>
+                    <option value="26">2026</option>
+                    <option value="27">2027</option>
+                    <option value="28">2028</option>
+                    <option value="29">2029</option>
+                    <option value="30">2030</option>
+                    <option value="31">2031</option>
+                </select>
+            </div>
+            <div class="month">
+                <select name="type" id="type">
+                    <option value="VISA">Visa</option>
+                    <option value="MASTERCARD">MASTERCARD</option>
+                    <option value="MAESTRO">MAESTRO</option>
+                    <option value="MIR">MIR</option>
+                    <option value="UZCARD">UzCard</option>
+                    <option value="HUMO">Humo</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Card Verification Field -->
+        <div class="card-verification">
+            <div class="cvv-input">
+                <input name="pinCode" type="text" required placeholder="CVV">
+            </div>
+            <div class="cvv-details">
+                <p>3 or 4 digits usually found <br> on the signature strip</p>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit" class="proceed-btn">Add</button>
+    </div>
+</form>
+</body>
+
+
+
+
+<style>
+    /* Global */
+    * {
+        box-sizing: border-box;
+    }
+
+    body,
+    html {
+        height: 100%;
+        min-height: 100%;
+
+    }
+
+    body {
+        font-family: 'Roboto',
+        sans-serif;
+        margin: 0;
+        background: #1abc9c;
+        overflow: hidden;
+    }
+    .credit-card {
+        width: 360px;
+        height: 400px;
+        margin: 60px auto 0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+        box-shadow: 1px 2px 3px 0 rgba(0,0,0,.10);
+    }
+    .form-header {
+        height: 60px;
+        padding: 20px 30px 0;
+        border-bottom: 1px solid #e1e8ee;
+    }
+
+    .form-body {
+        height: 340px;
+        padding: 30px 30px 20px;
+    }
+    .title {
+        font-size: 18px;
+        margin: 0;
+        color: #5e6977;
+    }
+    .card-number,
+    .cvv-input input,
+    .month select,
+    .year select {
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 14px;
+    }
+
+    .card-number,
+    .month select,
+    .year select {
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 14px;
+    }
+
+    .card-number,
+    .cvv-details,
+    .cvv-input input,
+    .month select,
+    .year select {
+        opacity: .7;
+        color: #86939e;
+    }
+    .card-number {
+        width: 100%;
+        margin-bottom: 20px;
+        padding-left: 20px;
+        border: 2px solid #e1e8ee;
+        border-radius: 6px;
+    }
+    .month select,
+    .year select {
+        width: 145px;
+        margin-bottom: 20px;
+        padding-left: 20px;
+        border: 2px solid #e1e8ee;
+        border-radius: 6px;
+        background: url('caret.png') no-repeat;
+        background-position: 85% 50%;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .month select {
+        float: left;
+    }
+
+    .year select {
+        float: right;
+    }
+    .cvv-input input {
+        float: left;
+        width: 145px;
+        padding-left: 20px;
+        border: 2px solid #e1e8ee;
+        border-radius: 6px;
+        background: #fff;
+        margin-left: 8px;
+    }
+
+    .cvv-details {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 16px;
+        float: right;
+        margin-bottom: 20px;
+    }
+
+    .cvv-details p {
+        margin-top: 6px;
+    }
+    .paypal-btn,
+    .proceed-btn {
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        border-color: transparent;
+        border-radius: 6px;
+    }
+
+    .proceed-btn {
+        margin-bottom: 10px;
+        background: #7dc855;
+    }
+
+    .paypal-btn a,
+    .proceed-btn a {
+        text-decoration: none;
+    }
+
+    .proceed-btn a {
+        color: #fff;
+    }
+
+    .paypal-btn a {
+        color: rgba(242, 242, 242, .7);
+    }
+
+</style>
+</html>
