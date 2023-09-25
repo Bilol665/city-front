@@ -50,17 +50,7 @@ public class UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto,headers);
-        try {
-            JwtResponse body = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtResponse.class).getBody();
-            assert body != null;
-            JwtTokenEntity token = JwtTokenEntity.builder()
-                    .username(loginDto.getEmail())
-                    .token(body.getAccessToken())
-                    .build();
-            jwtTokenRepository.save(token);
-        }catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+
     }
 
     public UserReadDto signUp(UserRequestDto userRequestDto) {
@@ -110,12 +100,12 @@ public class UserService {
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto, headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, JwtResponse.class).getBody();
     }
-    public JwtTokenEntity refreshJwtToken(LoginDto loginDto) {
+    public JwtResponse refreshJwtToken(LoginDto loginDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/login");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<LoginDto> entity = new HttpEntity<>(loginDto, headers);
-        return restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtTokenEntity.class).getBody();
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, JwtResponse.class).getBody();
     }
     public void sendReset(String email) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/auth/reset-password/" + email);
@@ -143,12 +133,24 @@ public class UserService {
 
     public void updateJWT(LoginDto loginDto){
         JwtTokenEntity oldJwt = jwtTokenRepository.findJwtTokenEntitiesByUsername(loginDto.getEmail());
-        JwtTokenEntity newJwt = refreshJwtToken(loginDto);
-        if (oldJwt==null){
-            jwtTokenRepository.save(newJwt);
-        }else {
+        JwtResponse newJwt = refreshJwtToken(loginDto);
+        System.out.println(newJwt.toString());
+        JwtTokenEntity token = JwtTokenEntity.builder()
+                .username(loginDto.getEmail())
+                .token(newJwt.getAccessToken()).build();
+
+        if (checkEmail(loginDto.getEmail())){
             jwtTokenRepository.delete(oldJwt);
-            jwtTokenRepository.save(newJwt);
+            jwtTokenRepository.save(token);
+        }else{
+            jwtTokenRepository.save(token);
         }
     }
+
+
+    public boolean checkEmail(String email) {
+        Long t = jwtTokenRepository.countJwtTokenEntitiesByUsername(email);
+        return t >= 1;
+    }
+
 }

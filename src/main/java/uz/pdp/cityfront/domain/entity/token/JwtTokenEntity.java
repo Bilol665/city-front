@@ -15,6 +15,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+@ToString
 public class JwtTokenEntity {
     @Id
     @GeneratedValue

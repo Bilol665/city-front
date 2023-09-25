@@ -37,8 +37,8 @@ public class PaymentService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<CreateCardDto> entity = new HttpEntity<>(createCardDto, headers);
 
-        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName());
-        headers.set("authorization","Bearer " + token.getToken());
+       // JwtTokenEntity token = jwtTokenRepository.(principal.getName());
+        //headers.set("authorization","Bearer " + token.getToken());
 
         try {
             return restTemplate.exchange(uri.toUriString(),HttpMethod.POST,entity,CardReadDto.class).getBody();

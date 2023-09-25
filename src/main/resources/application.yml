@@ -1,6 +1,6 @@
 
 server:
-    port: 8081
+    port: 8085
 
 spring:
     application:
@@ -8,7 +8,7 @@ spring:
 
     datasource:
         username: postgres
-        password: 1234
+        password: 1221
         url: jdbc:postgresql://localhost:5432/city_front
         driver-class-name: org.postgresql.Driver
     jpa:
