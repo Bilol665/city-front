@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import uz.pdp.cityfront.domain.dto.reader.CreateCardDto;
+import uz.pdp.cityfront.domain.dto.card.CardReadDto;
 import uz.pdp.cityfront.service.payment.PaymentService;
 
 import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
-
 public class PaymentController {
     private final PaymentService paymentService;
     @GetMapping("/menu")
@@ -24,7 +23,7 @@ public class PaymentController {
     }
     @PostMapping("/saveCard")
     public String save(
-             CreateCardDto createCardDto,
+             CardReadDto createCardDto,
              Principal principal
     ){
     paymentService.save(createCardDto,principal);

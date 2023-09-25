@@ -1,4 +1,4 @@
-package uz.pdp.cityfront.domain.dto.reader;
+package uz.pdp.cityfront.domain.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

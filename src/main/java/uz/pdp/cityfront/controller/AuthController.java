@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.cityfront.domain.dto.LoginDto;
-import uz.pdp.cityfront.domain.dto.ResetPasswordDto;
-import uz.pdp.cityfront.domain.dto.UserRequestDto;
-import uz.pdp.cityfront.domain.dto.VerificationDto;
-import uz.pdp.cityfront.domain.dto.reader.UserReadDto;
+import uz.pdp.cityfront.domain.dto.user.LoginDto;
+import uz.pdp.cityfront.domain.dto.user.ResetPasswordDto;
+import uz.pdp.cityfront.domain.dto.user.UserRequestDto;
+import uz.pdp.cityfront.domain.dto.user.VerificationDto;
+import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.service.user.UserService;
 
@@ -26,7 +26,6 @@ public class AuthController {
             Model model
     ) {
         try {
-            userService.updateJWT(loginDto);
             userService.login(loginDto);
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());
