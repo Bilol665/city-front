@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.service.apartment.AccommodationService;
+
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,10 +20,11 @@ public class AccommodationController {
 
     @RequestMapping(path = "/search",method = RequestMethod.GET)
     public String search(
-            @ModelAttribute Filter filter,
+            Filter filter,
+            @RequestParam UUID userId,
             Model model
     ){
-//        model.addAttribute("accommodations",accommodationService.search(filter));
+        model.addAttribute("accommodations",accommodationService.search(filter,userId));
         return "/apartment/accommodations";
     }
 }

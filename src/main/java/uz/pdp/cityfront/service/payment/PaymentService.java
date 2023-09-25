@@ -14,6 +14,9 @@ import uz.pdp.cityfront.repository.JwtTokenRepository;
 import uz.pdp.cityfront.service.user.UserService;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -24,7 +27,7 @@ public class PaymentService {
     @Value("${services.user-service}")
     private String userUrl;
 
-    public CardReadDto save(CreateCardDto createCardDto,Principal principal) {
+    public CardReadDto save(CardReadDto createCardDto,Principal principal) {
         UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(userUrl + "payment/api/v1/card/save");
 
         HttpHeaders headers = new HttpHeaders();

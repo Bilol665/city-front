@@ -191,13 +191,13 @@
   <!-- find section -->
   <section class="find_section ">
     <div class="container">
-      <form action="" method="get">
+      <form action="/apartment/search" method="get">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Search flat by number of rooms" name="numberOfFlats">
+            <input type="number" class="form-control" placeholder="Search flat by number of rooms" name="numberOfFlats" value="0">
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Price" name="maxPrice">
+            <input type="number" class="form-control" placeholder="Price" name="maxPrice" value="0">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">
