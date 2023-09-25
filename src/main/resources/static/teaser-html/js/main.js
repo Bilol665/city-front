@@ -47,8 +47,8 @@
 
 	ModalSignin.prototype.togglePassword = function(target) {
 		var password = target.previousElementSibling;
-		( 'password' == password.getAttribute('type') ) ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password');
-		target.textContent = ( 'Hide' == target.textContent ) ? 'Show' : 'Hide';
+		( 'password' === password.getAttribute('type') ) ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password');
+		target.textContent = ( 'Hide' === target.textContent ) ? 'Show' : 'Hide';
 		putCursorAtEnd(password);
 	}
 
@@ -57,12 +57,12 @@
 		!hasClass(this.element, 'cd-signin-modal--is-visible') && addClass(this.element, 'cd-signin-modal--is-visible');
 		// show selected form
 		for( var i=0; i < this.blocks.length; i++ ) {
-			this.blocks[i].getAttribute('data-type') == type ? addClass(this.blocks[i], 'cd-signin-modal__block--is-selected') : removeClass(this.blocks[i], 'cd-signin-modal__block--is-selected');
+			this.blocks[i].getAttribute('data-type') === type ? addClass(this.blocks[i], 'cd-signin-modal__block--is-selected') : removeClass(this.blocks[i], 'cd-signin-modal__block--is-selected');
 		}
 		//update switcher appearance
 		var switcherType = (type == 'signup') ? 'signup' : 'login';
 		for( var i=0; i < this.switchers.length; i++ ) {
-			this.switchers[i].getAttribute('data-type') == switcherType ? addClass(this.switchers[i], 'cd-selected') : removeClass(this.switchers[i], 'cd-selected');
+			this.switchers[i].getAttribute('data-type') === switcherType ? addClass(this.switchers[i], 'cd-selected') : removeClass(this.switchers[i], 'cd-selected');
 		} 
 	};
 

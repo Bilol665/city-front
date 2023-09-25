@@ -95,8 +95,8 @@
 
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">Password</label>
-              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="text"  placeholder="Password" name="password" >
-              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password"  placeholder="Password" name="password" >
+              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Show</a>
               <span class="cd-signin-modal__error">Error message here!</span>
             </p>
 
@@ -127,8 +127,8 @@
 
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="text"  placeholder="Password" name="password"required>
-              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password"  placeholder="Password" name="password" required>
+              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Show</a>
             </p>
 
             <p class="cd-signin-modal__fieldset">
@@ -191,13 +191,13 @@
   <!-- find section -->
   <section class="find_section ">
     <div class="container">
-      <form action="">
+      <form action="/apartment/search" method="get">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Serach Your Categories ">
+            <input type="number" class="form-control" placeholder="Search flat by number of rooms" name="numberOfFlats" value="0">
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location ">
+            <input type="number" class="form-control" placeholder="Price" name="maxPrice" value="0">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">
