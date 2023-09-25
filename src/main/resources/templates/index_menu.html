@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+      crossorigin="anonymous"
+    />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="action">
+      <div class="profile" onclick="menuToggle();">
+        <img src="./assets/avatar.jpg" />
+      </div>
+      <div class="menu">
+        <h3>Someone Famous<br /><span>Website Designer</span></h3>
+        <ul>
+          <li>
+            <img src="./assets/icons/envelope.png" /><a href="#">Inbox</a>
+          </li>
+          <li>
+            <img src="./assets/icons/settings.png" /><a href="#">Change Password</a>
+          </li>
+          <li>
+            <img src="./assets/icons/log-out.png" /><a href="#">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      function menuToggle() {
+        const toggleMenu = document.querySelector(".menu");
+        toggleMenu.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
