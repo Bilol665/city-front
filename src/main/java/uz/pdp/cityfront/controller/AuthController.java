@@ -1,5 +1,7 @@
 package uz.pdp.cityfront.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.service.user.UserService;
+import uz.pdp.cityfront.util.Utils;
 
 import java.util.Map;
 
@@ -23,18 +26,20 @@ public class AuthController {
     @PostMapping("/login" )
     public String login(
             LoginDto loginDto,
-            Model model
+            Model model,
+            HttpServletResponse response
     ) {
         try {
             JwtTokenEntity login = userService.login(loginDto);
-            model.addAttribute("email",loginDto.getEmail());
-            model.addAttribute("token",login.getToken());
+            response.addCookie(Utils.createCookie("token",login.getToken()));
+            response.addCookie(Utils.createCookie("email",loginDto.getEmail()));
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());
             return "index_password_error";
         }
         return "menu";
     }
+
     @PostMapping("/register")
     public String signUp(
             @ModelAttribute UserRequestDto userRequestDto,
@@ -52,12 +57,13 @@ public class AuthController {
     @PostMapping("/verify")
     public String verify(
             @ModelAttribute VerificationDto verificationDto,
-            Model model
+            Model model,
+            HttpServletResponse response
     ) {
         try {
             JwtTokenEntity verify = userService.verify(verificationDto);
+            response.addCookie(Utils.createCookie("token",verify.getToken()));
             model.addAttribute("email",verify.getUsername());
-            model.addAttribute("token",verify.getToken());
         }catch (Exception e){
             return "index_verification_error";
         }
@@ -81,25 +87,27 @@ public class AuthController {
     @PostMapping("/changePassword")
     public String password(
             ResetPasswordDto resetPasswordDto,
-            Model model
+            @CookieValue(name = "email") String email,
+            @CookieValue(name = "token") String token,
+            HttpServletResponse response
     ) {
         try {
-            userService.changePassword(resetPasswordDto.getEmail(),resetPasswordDto,resetPasswordDto.getToken());
-            model.addAttribute("token",resetPasswordDto.getToken());
+            userService.changePassword(email,resetPasswordDto,token);
+            response.addCookie(Utils.createCookie("token",token));
         }catch (Exception e){
             return "index_password_error";
         }
         return "index";
     }
 
-    @GetMapping("/getPage/changePassword/{email}/{token}")
+    @GetMapping("/getPage/changePassword")
     public String getPagePassword(
-            @PathVariable String email,
-            @PathVariable String token,
-            Model model
+            @CookieValue(name = "email") String email,
+            @CookieValue(name = "token") String token,
+            HttpServletResponse response
     ){
-        model.addAttribute("email",email);
-        model.addAttribute("token",token);
+        response.addCookie(Utils.createCookie("email",email));
+        response.addCookie(Utils.createCookie("token",token));
         return "changePassword";
     }
 

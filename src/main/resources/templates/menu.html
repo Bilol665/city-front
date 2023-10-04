@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <!-- Basic -->
@@ -50,7 +50,7 @@
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}" /><a href="#">Inbox</a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/settings.png}" /><a th:href="@{'/auth/getPage/changePassword/'+${email}+'/'+${token}}">
+                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}" /><a href="/auth/getPage/changePassword/">
                     Change Password
                 </a>
                 </li>
@@ -98,13 +98,13 @@
 <!-- find section -->
 <section class="find_section ">
     <div class="container">
-        <form action="">
+        <form action="/apartment/search" method="post">
             <div class=" form-row">
                 <div class="col-md-5">
-                    <input type="text" class="form-control" placeholder="Serach Your Categories ">
+                    <input type="text" class="form-control" placeholder="Floors" name="floor">
                 </div>
                 <div class="col-md-5">
-                    <input type="text" class="form-control" placeholder="Location ">
+                    <input type="text" class="form-control" placeholder="Number of rooms" name="numberOfFlats">
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="">

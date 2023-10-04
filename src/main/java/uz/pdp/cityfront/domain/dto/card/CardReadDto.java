@@ -6,15 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CardReadDto {
+    private UUID id;
+    private LocalDateTime createdDate;
     private String number;
     private String holderName;
-    private Integer expiredDate;
-    private Integer pinCode;
-    private String type;
+    private Date expiredDate;
+    private Double balance;
+    private UUID ownerId;
+    private CardType type;
 }

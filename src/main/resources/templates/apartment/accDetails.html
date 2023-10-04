@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${accommodation.name}+'\'s details'"></title>
+    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/accommodation.css}"/>
+</head>
+<body>
+<div class="outer-div">
+    <div id="details-div">
+        <h1>Accommodation information</h1>
+        <div style="margin-left: 20px">
+            <h2 th:text="'Name: '+${accommodation.getName()}"></h2>
+            <br>
+            <h5>Company: <a class="a-hrefs" th:text="${accommodation.getCompany().getName()}" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}"></a></h5>
+            <h5 th:text="'Number of flats: '+${accommodation.getNumberOfFlats()}"></h5>
+            <h5 th:text="'Number of floors: '+${accommodation.getFloors()}"></h5>
+            <button type="button" class="collapsible">Flats</button>
+            <div th:if="${block == true}" style="display: block" class="content">
+                <a th:href="@{'/flat/acc/'+${accommodation.id}}" class="a-hrefs">See all</a>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Which floor</th>
+                        <th>Flat type</th>
+                        <th>Rooms</th>
+                        <th>Owner</th>
+                        <th>Price per month</th>
+                        <th>Full price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="flat: ${flats}">
+                        <td th:text="${flat.number}"></td>
+                        <td th:text="${flat.whichFloor}"></td>
+                        <td th:text="${flat.flatType}"></td>
+                        <td th:text="${flat.rooms}"></td>
+                        <td th:text="${flat.owner.name}"></td>
+                        <td th:text="${flat.pricePerMonth}"></td>
+                        <td th:text="${flat.fullPrice}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${block == false}" style="display: none" class="content">
+                <a th:href="@{'/flat/acc/'+${accommodation.id}}" class="a-hrefs">See all</a>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Which floor</th>
+                        <th>Flat type</th>
+                        <th>Rooms</th>
+                        <th>Owner</th>
+                        <th>Price per month</th>
+                        <th>Full price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="flat: ${flats}">
+                        <td th:text="${flat.number}"></td>
+                        <td th:text="${flat.whichFloor}"></td>
+                        <td th:text="${flat.flatType}"></td>
+                        <td th:text="${flat.rooms}"></td>
+                        <td th:text="${flat.owner.name}"></td>
+                        <td th:text="${flat.pricePerMonth}"></td>
+                        <td th:text="${flat.fullPrice}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const coll = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${accommodation.name}+'\'s flats'"></title>
+    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/flat.css}"/>
+</head>
+<body>
+<div class="outer-div">
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Start typing...">
+        <div class="categories" id="category-suggestions"></div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Which floor</th>
+            <th>Flat type</th>
+            <th>Rooms</th>
+            <th>Owner</th>
+            <th>Price per month</th>
+            <th>Full price</th>
+            <th>About</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flat: ${flats}">
+            <td th:text="${flat.number}"></td>
+            <td th:text="${flat.whichFloor}"></td>
+            <td th:text="${flat.flatType}"></td>
+            <td th:text="${flat.rooms}"></td>
+            <td th:text="${flat.owner.name}"></td>
+            <td th:text="${flat.pricePerMonth}"></td>
+            <td th:text="${flat.fullPrice}"></td>
+            <td th:text="${flat.about}" onclick="initiateCategorySearch()"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:inline="javascript">
+    // Get references to the input and category suggestions
+    const searchInput = document.getElementById('search-input');
+    const categorySuggestions = document.getElementById('category-suggestions');
+
+    // Map of keywords and their corresponding categories
+    const keywordToCategoryMap = {
+        numberOfFlats: 'Number of rooms',
+        floor: 'Which floor',
+        startDate: 'Start date',
+        endDate: 'End date',
+        minPrice: 'Min price',
+        maxPrice: 'Max price',
+        type: 'Type',
+        status: 'Status'
+        // Add more keywords and categories as needed
+    };
+
+    // Function to display category suggestions based on user input
+    function displayCategorySuggestions() {
+        const inputValue = searchInput.value.trim().toLowerCase();
+        console.log(inputValue)
+
+        // Clear the category suggestions
+        categorySuggestions.innerHTML = '';
+
+        // Check if the input matches any keywords
+        for (const keyword in keywordToCategoryMap) {
+            console.log(keyword)
+            if (inputValue.length > 0) {
+                const category = keywordToCategoryMap[keyword];
+                const categoryItem = document.createElement('div');
+                const aItem = document.createElement('button');
+                // aItem.setAttribute('onclick',`initiateCategorySearch(${keyword},${inputValue})`)
+                aItem.textContent = `${category}`;
+                categoryItem.appendChild(aItem);
+                aItem.addEventListener('click', () => {
+                    initiateCategorySearch(keyword,inputValue);
+                });
+                categorySuggestions.appendChild(categoryItem);
+            }
+        }
+
+        // Show the category suggestions if there are matches
+        if (categorySuggestions.children.length > 0) {
+            categorySuggestions.style.display = 'block';
+        } else {
+            // Hide the category suggestions if there are no matches
+            categorySuggestions.style.display = 'none';
+        }
+    }
+
+    // Event listener for input changes
+    searchInput.addEventListener('input', displayCategorySuggestions);
+
+    // Function to initiate a search within a category
+    function initiateCategorySearch(category,searchText) {
+        console.log(searchText)
+        const accommodation = [[${accommodation}]];
+        // Replace this with your actual search logic within the specified category
+        const url = `/flat/search/${accommodation.id}`; // Replace with your actual URL
+
+        const requestData = {
+            category: category,
+            searchValue: searchText
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(/* Handle response */)
+            .catch(/* Handle errors */);
+    }
+
+</script>
+</body>
+</html>

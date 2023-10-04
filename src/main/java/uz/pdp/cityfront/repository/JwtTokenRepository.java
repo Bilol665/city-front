@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface JwtTokenRepository extends JpaRepository<JwtTokenEntity, UUID> {
     Optional<JwtTokenEntity> findJwtTokenEntitiesByUsername(String username);
+    Optional<JwtTokenEntity> findJwtTokenEntityByToken(String token);
 }

@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +30,25 @@ public class Filter {
     private int perPage;
     private int numberOfFlats;
     private int floor;
+    public void set(String name, String value) {
+        switch (name) {
+            case "numberOfFlats" -> this.numberOfFlats = Integer.parseInt(value);
+            case "floor" -> this.floor = Integer.parseInt(value);
+            case "endDate" -> {
+                this.endDate = Date.from(Instant.parse(value));
+            }
+            case "startDate" -> {
+                this.startDate = Date.from(Instant.parse(value));
+            }
+            case "minPrice" -> {
+                this.minPrice = Double.parseDouble(value);
+            }
+            case "maxPrice" -> {
+                this.maxPrice = Double.parseDouble(value);
+            }
+            case "type" -> this.type = value;
+            case "status" -> this.status = value;
+        }
+    }
 
 }

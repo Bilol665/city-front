@@ -1,0 +1,49 @@
+table {
+    background-color: white;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+body {
+    background-color: lightskyblue;
+}
+.outer-div {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+}
+
+.a-hrefs {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+#details-div {
+    padding: 40px;
+    width: 450px;
+    background-color: white;
+    border: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+/* Add your desired styles for the search container, input, and category suggestions */
+.search-container {
+    position: relative;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+}
+
+.categories {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: none; /* Hide the categories by default */
+}

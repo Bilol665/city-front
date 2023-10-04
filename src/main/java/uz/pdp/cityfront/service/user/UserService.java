@@ -81,7 +81,10 @@ public class UserService {
         ApiResponse4Jwt response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ApiResponse4Jwt.class).getBody();
         UserReadDto user = getUserById(UUID.fromString(verificationDto.getUserId()));
         assert response != null;
-        return jwtTokenRepository.save(JwtTokenEntity.builder().username(user.getEmail()).token(response.getData().getAccessToken()).build());
+        JwtResponse data = response.getData();
+        JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(user.getEmail()).orElse(null);
+        if(token == null) return jwtTokenRepository.save(JwtTokenEntity.builder().token(data.getAccessToken()).username(user.getEmail()).build());
+        else return jwtTokenRepository.save(JwtTokenEntity.builder().id(token.getId()).username(user.getEmail()).token(data.getAccessToken()).build());
     }
     public UserReadDto getUserById(UUID id) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/id")

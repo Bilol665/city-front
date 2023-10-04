@@ -5,14 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 public class AccommodationReadDto {
+    private UUID id;
     private String name;
     private LocationDto locationEntity;
+    private CompanyDto company;
     private Integer numberOfFlats;
     private Integer floors;
-    private CompanyDto company;
+    private String imgPath;
 }

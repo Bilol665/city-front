@@ -13,6 +13,4 @@ public class ResetPasswordDto {
     private String newPassword;
     @NotBlank(message = "Confirm your password")
     private String confirmPassword;
-    private String email;
-    private String token;
 }

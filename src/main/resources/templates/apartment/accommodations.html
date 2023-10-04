@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Apartments</title>
-    <link rel="stylesheet" href="../../static/teaser-html/css/accommodation/accommodation.css">
-
-
+    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/accommodation.css}">
 </head>
 <body>
-<div class="table-div">
-    <button onclick="populateTable({accommodations})">Get Accommodations</button>
-    <table>
-        <thead>
-        <tr>
-            <th>Accommodation name</th>
-            <th>Company</th>
-            <th>Number of flats</th>
-            <th>Floors</th>
-        </tr>
-        </thead>
-        <tbody class="table-body">
-        </tbody>
-    </table>
+<div class="outer-div" th:if="${accommodations.isEmpty()}">
+    <p>No accommodations available</p>
+</div>
+<div class="outer-div" th:if="${!accommodations.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>Accommodation name</th>
+                <th>Company</th>
+                <th>Number of flats</th>
+                <th>Floors</th>
+            </tr>
+            </thead>
+            <tbody class="table-body">
+            <tr th:each="accommodation : ${accommodations}">
+                <td><a class="a-hrefs" th:href="@{'/apartment/get/acc/'+${accommodation.getId()}}" th:text="${accommodation.name}"></a></td>
+                <td><a class="a-hrefs" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}" th:text="${accommodation.company.name}"></a></td>
+                <td th:text="${accommodation.numberOfFlats}"></td>
+                <td th:text="${accommodation.floors}"></td>
+            </tr>
+            </tbody>
+        </table>
 </div>
 <script src="../../static/teaser-html/js/accommodation.js"></script>
 </body>

@@ -4,19 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.cityfront.domain.dto.card.CardReadDto;
 import uz.pdp.cityfront.domain.dto.user.UserReadDto;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class CompanyDto {
-    private UUID id;
-    private String name;
-    private String description;
+public class FlatDto {
+    private Integer number;
+    private Integer whichFloor;
+    private String flatType;
+    private Integer rooms;
     private UserReadDto owner;
-    private CardReadDto card;
+    private String status;
+    private String about;
+    private Double pricePerMonth;
+    private Double fullPrice;
 }
