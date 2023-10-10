@@ -80,7 +80,7 @@ body {
 
 /*header section*/
 .hero_area {
-  background-image: url(../images/hero-bg.jpg);
+  background-image: url(../../images/hero-bg.jpg);
   position: relative;
   background-repeat: no-repeat;
   background-position: top right;
@@ -163,7 +163,7 @@ a:focus {
 }
 
 .custom_nav-container .nav_search-btn {
-  background-image: url(../images/search-icon.png);
+  background-image: url(../../images/search-icon.png);
   background-size: 17px;
   background-repeat: no-repeat;
   background-position-y: 7px;
@@ -763,12 +763,12 @@ a:focus {
     }
 
     .carousel-control-prev {
-      background-image: url(../images/prev-white.png);
+      background-image: url(../../images/prev-white.png);
       left: 10px;
     }
 
     .carousel-control-next {
-      background-image: url(../images/next-white.png);
+      background-image: url(../../images/next-white.png);
       right: 10px;
     }
   }

@@ -2,121 +2,261 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${accommodation.name}+'\'s flats'"></title>
-    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/flat.css}"/>
+    <title th:if="${accommodation != null}" th:text="${accommodation.name}+'\'s flats'"></title>
+    <title th:if="${accommodation == null}">Search result</title>
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
+    <link
+            rel="stylesheet"
+            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
+            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+            crossorigin="anonymous"
+    />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
+    <style>
+        #myTable {
+            font-size: 16px;
+            background-color: white;
+            border-collapse: collapse;
+            margin-bottom: 37px;
+        }
+
+        #myTable th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        #myTable th:hover {
+            background: #c7c7c7;
+        }
+        .outer-div {
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+        }
+        /*body {*/
+        /*    background-color: lightskyblue;*/
+        /*}*/
+    </style>
 </head>
 <body>
-<div class="outer-div">
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Start typing...">
-        <div class="categories" id="category-suggestions"></div>
+<div class="hero_area" style="background-image: none">
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="/home">
+                    <img th:src="@{/teaser-html/images/logo.png}" alt="" />
+                </a>
+                <div class="navbar-collapse" id="" >
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
+                <span class="s-1" style="background-color: dodgerblue">
+
+                </span>
+                            <span class="s-2" style="background-color: dodgerblue">
+
+                </span>
+                            <span class="s-3" style="background-color: dodgerblue">
+
+                </span>
+                        </button>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a href="/home">HOME</a>
+                            <a href="about.html">ABOUT</a>
+                            <a href="house.html">HOUSE</a>
+                            <a href="price.html">PRICING</a>
+                            <a href="contact.html">CONTACT US</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="action" style="margin-top: 50px">
+        <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
+        </div>
+        <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <h3 th:text="${user.name}"></h3>
+            <!--            <br />-->
+            <p th:text="${role}"></p>
+            <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
+                </li>
+                <li>
+                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"  alt="Change password"/><a href="/auth/getPage/changePassword/">
+                    Change Password
+                </a>
+                </li>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <table>
+    <script>
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active");
+        }
+    </script>
+
+    <!-- end header section -->
+    <!-- slider section -->
+    <!--<section class="slider_section ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 offset-md-1">
+                    <div class="detail-box">
+                        <h1>
+                            <span> Modern</span> <br>
+                            Apartment <br>
+                            House
+                        </h1>
+                        <p>
+                            It is a long established fact that a reader will be distracted by the readable content of
+                        </p>
+                        <div class="btn-box">
+                            <a href="" class="">
+                                Read More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+    <!-- end slider section -->
+</div>
+<div class="outer-div">
+    <table id="myTable">
         <thead>
         <tr>
-            <th>Number</th>
-            <th>Which floor</th>
-            <th>Flat type</th>
-            <th>Rooms</th>
-            <th>Owner</th>
-            <th>Price per month</th>
-            <th>Full price</th>
-            <th>About</th>
-            <th></th>
+            <th onclick="sortTable(0)">Number<span class="asc"></span></th>
+            <th onclick="sortTable(1)">Which floor<span class="asc"></span></th>
+            <th onclick="sortTableAl(2)">Flat type</th>
+            <th onclick="sortTable(3)">Rooms</th>
+            <th onclick="sortTableAl(4)">Owner</th>
+            <th onclick="sortTable(5)">Price per month</th>
+            <th onclick="sortTable(6)">Full price</th>
+            <th onclick="sortTableAl(7)">About</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="flat: ${flats}">
-            <td th:text="${flat.number}"></td>
+            <td><a th:text="${flat.number}" th:href="@{'/flat/' + ${flat.id}}" class="a-hrefs"></a></td>
             <td th:text="${flat.whichFloor}"></td>
-            <td th:text="${flat.flatType}"></td>
+            <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
             <td th:text="${flat.rooms}"></td>
-            <td th:text="${flat.owner.name}"></td>
+            <td><a th:text="${flat.owner.name}" th:href="@{'/user/' + ${flat.owner.id}}" class="a-hrefs"></a></td>
             <td th:text="${flat.pricePerMonth}"></td>
             <td th:text="${flat.fullPrice}"></td>
-            <td th:text="${flat.about}" onclick="initiateCategorySearch()"></td>
+            <td th:text="${flat.about}"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<script th:inline="javascript">
-    // Get references to the input and category suggestions
-    const searchInput = document.getElementById('search-input');
-    const categorySuggestions = document.getElementById('category-suggestions');
+<script type="text/javascript">
+    let ascendingOrder = true; // Flag to track sorting order
 
-    // Map of keywords and their corresponding categories
-    const keywordToCategoryMap = {
-        numberOfFlats: 'Number of rooms',
-        floor: 'Which floor',
-        startDate: 'Start date',
-        endDate: 'End date',
-        minPrice: 'Min price',
-        maxPrice: 'Max price',
-        type: 'Type',
-        status: 'Status'
-        // Add more keywords and categories as needed
-    };
+    function sortTable(columnIndex) {
+        // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
+            const table = document.getElementById("myTable");
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.getElementsByTagName("tr"));
 
-    // Function to display category suggestions based on user input
-    function displayCategorySuggestions() {
-        const inputValue = searchInput.value.trim().toLowerCase();
-        console.log(inputValue)
+            rows.sort((a, b) => {
+                const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+                const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
 
-        // Clear the category suggestions
-        categorySuggestions.innerHTML = '';
+                if (ascendingOrder) {
+                    return aValue - bValue;
+                } else {
+                    return bValue - aValue;
+                }
+            });
 
-        // Check if the input matches any keywords
-        for (const keyword in keywordToCategoryMap) {
-            console.log(keyword)
-            if (inputValue.length > 0) {
-                const category = keywordToCategoryMap[keyword];
-                const categoryItem = document.createElement('div');
-                const aItem = document.createElement('button');
-                // aItem.setAttribute('onclick',`initiateCategorySearch(${keyword},${inputValue})`)
-                aItem.textContent = `${category}`;
-                categoryItem.appendChild(aItem);
-                aItem.addEventListener('click', () => {
-                    initiateCategorySearch(keyword,inputValue);
-                });
-                categorySuggestions.appendChild(categoryItem);
+            // Toggle the sorting order flag
+            ascendingOrder = !ascendingOrder;
+
+            // Remove existing rows from the tbody
+            rows.forEach(row => tbody.removeChild(row));
+
+            // Append the sorted rows back to the tbody
+            rows.forEach(row => tbody.appendChild(row));
+        // }
+    }
+    function sortTableAl(n) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount ++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
             }
         }
-
-        // Show the category suggestions if there are matches
-        if (categorySuggestions.children.length > 0) {
-            categorySuggestions.style.display = 'block';
-        } else {
-            // Hide the category suggestions if there are no matches
-            categorySuggestions.style.display = 'none';
-        }
     }
-
-    // Event listener for input changes
-    searchInput.addEventListener('input', displayCategorySuggestions);
-
-    // Function to initiate a search within a category
-    function initiateCategorySearch(category,searchText) {
-        console.log(searchText)
-        const accommodation = [[${accommodation}]];
-        // Replace this with your actual search logic within the specified category
-        const url = `/flat/search/${accommodation.id}`; // Replace with your actual URL
-
-        const requestData = {
-            category: category,
-            searchValue: searchText
-        };
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        })
-            .then(/* Handle response */)
-            .catch(/* Handle errors */);
-    }
-
 </script>
+<script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
 </body>
 </html>

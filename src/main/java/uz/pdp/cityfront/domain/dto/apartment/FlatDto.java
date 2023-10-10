@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 public class FlatDto {
+    private UUID id;
     private Integer number;
     private Integer whichFloor;
     private String flatType;

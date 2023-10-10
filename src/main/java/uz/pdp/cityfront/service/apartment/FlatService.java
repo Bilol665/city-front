@@ -30,16 +30,34 @@ public class FlatService {
         });
         return exchange.getBody();
     }
-    public List<FlatDto> search(ReadFromJs read, String token) {
+    public List<FlatDto> search(Filter filter, String token) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/flat/all");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("authorization","Bearer " + token);
-        Filter filter = new Filter();
-        filter.set(read.getCategory(),read.getSearchValue());
         HttpEntity<Filter> entity = new HttpEntity<>(filter,headers);
         ResponseEntity<List<FlatDto>> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, new ParameterizedTypeReference<>() {
         });
         return exchange.getBody();
+    }
+
+    public FlatDto getFlat(UUID id,String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/flat/get/" + id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<FlatDto> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(),HttpMethod.GET,entity,FlatDto.class).getBody();
+    }
+
+    public List<FlatDto> getFlatsByType(String type, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/flat/all");
+        type = "{\"type\": \"" + type + "\"}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>(type,headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity, new ParameterizedTypeReference<List<FlatDto>>() {
+        }).getBody();
     }
 }

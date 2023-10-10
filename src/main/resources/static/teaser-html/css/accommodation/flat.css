@@ -33,17 +33,3 @@ body {
     position: relative;
 }
 
-#search-input {
-    width: 100%;
-    padding: 10px;
-}
-
-.categories {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    display: none; /* Hide the categories by default */
-}

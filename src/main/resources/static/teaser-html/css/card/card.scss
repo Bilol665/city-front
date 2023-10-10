@@ -1,0 +1,273 @@
+table {
+    background-color: white;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+body {
+    background-color: lightskyblue;
+}
+.outer-div {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100vh; /* 100% of the viewport height */
+}
+
+.a-hrefs {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+#details-div {
+    padding: 40px;
+    width: 450px;
+    background-color: white;
+    border: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+/*header section*/
+.hero_area {
+    background-image: url(../../images/hero-bg.jpg);
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 60% 100%;
+}
+
+.sub_page {
+    .hero_area {
+        height: auto;
+        background: none;
+        background-color: #0f2480;
+    }
+}
+
+
+
+.header_section {
+    overflow-x: hidden;
+
+    .container-fluid {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
+    .nav_container {
+        margin: 0 auto;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+        width: 90%;
+    }
+
+    .user_option {
+        display: flex;
+        align-items: center;
+
+        a {
+            display: flex;
+            color: $white;
+            align-items: center;
+        }
+    }
+}
+
+.custom_nav-container.navbar-expand-lg {
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                padding: 10px 15px;
+                color: #060606;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            &.active,
+            &:hover {
+                .nav-link {
+                    color: $primary1;
+                }
+            }
+        }
+    }
+}
+
+a,
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: initial;
+}
+
+.btn,
+.btn:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.custom_nav-container .nav_search-btn {
+    background-image: url(../../images/search-icon.png);
+    background-size: 17px;
+    background-repeat: no-repeat;
+    background-position-y: 7px;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    border: none;
+}
+
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 90px;
+    }
+
+// span {
+
+//   font-weight: bold;
+//   color: $white;
+//   font-size: 22px;
+// }
+}
+
+.custom_nav-container {
+    z-index: 99999;
+    padding: 0;
+    height: 80px;
+}
+
+.custom_nav-container .navbar-toggler {
+    outline: none;
+
+    .navbar-toggler-icon {
+        background-image: url(../../images/menu.png);
+        background-size: 50px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.lg_toggl-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 56px;
+    height: 40px;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.User_option {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 35px;
+
+    a {
+        color: $white;
+    }
+}
+
+
+.custom_menu-btn {
+    z-index: 9;
+    position: absolute;
+    right: 15px;
+    top: 7px;
+}
+
+.custom_menu-btn button {
+    margin-top: 12px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+
+}
+
+.custom_menu-btn button span {
+    display: block;
+    width: 50px;
+    height: 5px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: all .3s;
+}
+
+.menu_btn-style {
+    position: fixed;
+    right: 40px;
+    top: 7px;
+}
+
+.custom_menu-btn .s-2 {
+    width: 25px;
+    margin-left: auto;
+}
+
+.custom_menu-btn .s-3 {
+    width: 25px;
+    margin-left: auto;
+}
+
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba($color: $primary1, $alpha: .9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    font-size: 60px;
+}
+
+.overlay a {
+    padding: 0px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+    margin-bottom: 15px;
+
+    &:hover {
+        color: $black;
+    }
+}
+
+.overlay-content {
+    position: relative;
+    top: 30%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.menu_width {
+    width: 100%;
+}
+
+/*end header section*/

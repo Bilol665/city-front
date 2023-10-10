@@ -1,6 +1,6 @@
 package uz.pdp.cityfront.controller;
 
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,6 +33,8 @@ public class AuthController {
             JwtTokenEntity login = userService.login(loginDto);
             response.addCookie(Utils.createCookie("token",login.getToken()));
             response.addCookie(Utils.createCookie("email",loginDto.getEmail()));
+            model.addAttribute("user",userService.getUserByUsername(login.getUsername()));
+            model.addAttribute("role",userService.getRole(userService.getUserByUsername(login.getUsername())));
         } catch (MyException e) {
             model.addAttribute("message",e.getMessage());
             return "index_password_error";
@@ -64,6 +66,8 @@ public class AuthController {
             JwtTokenEntity verify = userService.verify(verificationDto);
             response.addCookie(Utils.createCookie("token",verify.getToken()));
             model.addAttribute("email",verify.getUsername());
+            model.addAttribute("user",userService.getUserByUsername(verify.getUsername()));
+            model.addAttribute("role",userService.getRole(userService.getUserByUsername(verify.getUsername())));
         }catch (Exception e){
             return "index_verification_error";
         }

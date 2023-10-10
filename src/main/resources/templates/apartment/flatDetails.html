@@ -2,46 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${company.name}"></title>
-    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
-    <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
-    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
-    <link
-            rel="stylesheet"
-            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
-            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-            crossorigin="anonymous"
-    />
-    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
-
-
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
-
-    <!-- fonts style -->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
-    <!-- responsive style -->
-    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
-    <style>
-        #details-div {
-            padding: 40px;
-            width: 450px;
-            background-color: white;
-            border: 5px;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-        }
-        .outer-div {
-            display: flex;
-            justify-content: center; /* Horizontally center */
-            align-items: center; /* Vertically center */
-        }
-    </style>
+    <title th:text="${flat.number} + '\'s flat'"></title>
+    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/flatDetails.scss}"/>
 </head>
 <body>
-<div class="hero_area" style="background-image: none">
+<div class="hero_area">
     <header class="header_section">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg custom_nav-container">
@@ -51,13 +16,13 @@
                 <div class="navbar-collapse" id="">
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
-                <span class="s-1" style="background-color: dodgerblue">
+                <span class="s-1">
 
                 </span>
-                            <span class="s-2" style="background-color: dodgerblue">
+                            <span class="s-2">
 
                 </span>
-                            <span class="s-3" style="background-color: dodgerblue">
+                            <span class="s-3">
 
                 </span>
                         </button>
@@ -76,10 +41,10 @@
         </div>
     </header>
     <div class="action" style="margin-top: 50px">
-        <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+        <div class="profile" onclick="menuToggle();">
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
-        <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+        <div class="menu">
             <h3 th:text="${user.name}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
@@ -106,6 +71,33 @@
     </script>
 
     <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 offset-md-1">
+                    <div class="detail-box">
+                        <h1>
+                            <span> Modern</span> <br>
+                            Apartment <br>
+                            House
+                        </h1>
+                        <p>
+                            It is a long established fact that a reader will be distracted by the readable content of
+                        </p>
+                        <div class="btn-box">
+                            <a href="" class="">
+                                Read More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end slider section -->
+</div>
+<div>
 </div>
 </body>
 </html>

@@ -3,14 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Apartments</title>
-    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/accommodation.css}">
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
+    <link
+            rel="stylesheet"
+            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
+            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+            crossorigin="anonymous"
+    />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
+    <style>
+        #myTable {
+            font-size: 16px;
+            background-color: white;
+            border-collapse: collapse;
+        }
+
+        #myTable th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        #myTable th:hover {
+            background: #c7c7c7;
+        }
+        .outer-div {
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+        }
+        /*body {*/
+        /*    background-color: lightskyblue;*/
+        /*}*/
+    </style>
 </head>
 <body>
+<div class="hero_area" style="background-image: none">
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="/home">
+                    <img th:src="@{/teaser-html/images/logo.png}" alt="" />
+                </a>
+                <div class="navbar-collapse" id="">
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
+                <span class="s-1" style="background-color: dodgerblue">
+
+                </span>
+                            <span class="s-2" style="background-color: dodgerblue">
+
+                </span>
+                            <span class="s-3" style="background-color: dodgerblue">
+
+                </span>
+                        </button>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a href="/home">HOME</a>
+                            <a href="about.html">ABOUT</a>
+                            <a href="house.html">HOUSE</a>
+                            <a href="price.html">PRICING</a>
+                            <a href="contact.html">CONTACT US</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="action" style="margin-top: 50px">
+        <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
+        </div>
+        <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <h3 th:text="${user.name}"></h3>
+            <!--            <br />-->
+            <p th:text="${role}"></p>
+            <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
+                </li>
+                <li>
+                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"  alt="Change password"/><a href="/auth/getPage/changePassword/">
+                    Change Password
+                </a>
+                </li>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active");
+        }
+    </script>
+
+    <!-- end header section -->
+</div>
 <div class="outer-div" th:if="${accommodations.isEmpty()}">
     <p>No accommodations available</p>
 </div>
 <div class="outer-div" th:if="${!accommodations.isEmpty()}">
-        <table>
+        <table id="myTable">
             <thead>
             <tr>
                 <th>Accommodation name</th>
