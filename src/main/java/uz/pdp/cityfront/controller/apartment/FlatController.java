@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.cityfront.domain.dto.apartment.ReadFromJs;
 import uz.pdp.cityfront.domain.dto.filter.Filter;
+import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.service.apartment.AccommodationService;
 import uz.pdp.cityfront.service.apartment.FlatService;
+import uz.pdp.cityfront.service.user.UserService;
 import uz.pdp.cityfront.util.Utils;
 
 import java.util.UUID;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class FlatController {
     private final FlatService flatService;
     private final AccommodationService accommodationService;
+    private final UserService userService;
 
     @RequestMapping(value = "/acc/{accId}",method = RequestMethod.GET)
     public String getAccommodations(
@@ -29,23 +32,65 @@ public class FlatController {
             Model model
     ) {
         String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
         model.addAttribute("flats",flatService.getFlats(accId,token));
         model.addAttribute("accommodation",accommodationService.getAcc(accId,token));
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
         response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
         return "/apartment/flats";
     }
-    @RequestMapping(value = "/search/{accId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
     public String search(
-            @RequestBody ReadFromJs readFromJs,
+            Filter filter,
             HttpServletRequest request,
             HttpServletResponse response,
-            Model model,
-            @PathVariable UUID accId
+            Model model
     ) {
         String token = Utils.getCookie("token", request);
-        model.addAttribute("flats",flatService.search(readFromJs,token));
-        model.addAttribute("accommodation",accommodationService.getAcc(accId,token));
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("flats",flatService.search(filter,token));
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
         response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        return "/apartment/flats";
+    }
+    @RequestMapping(value = "/{flatId}",method = RequestMethod.GET)
+    public String getFlat(
+            @PathVariable UUID flatId,
+            HttpServletResponse response,
+            HttpServletRequest request,
+            Model model
+    ) {
+        String token = Utils.getCookie("token",request);
+        String email = Utils.getCookie("email",request);
+        model.addAttribute("flat",flatService.getFlat(flatId,token));
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        return "/apartment/flatDetails";
+    }
+    @RequestMapping(value = "/byType/{type}",method = RequestMethod.GET)
+    public String getFlatsByType(
+            @PathVariable String type,
+            HttpServletResponse response,
+            HttpServletRequest request,
+            Model model
+    ) {
+        String token = Utils.getCookie("token",request);
+        String email = Utils.getCookie("email",request);
+        model.addAttribute("flats",flatService.getFlatsByType(type,token));
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("user",user);
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
         return "/apartment/flats";
     }
 }

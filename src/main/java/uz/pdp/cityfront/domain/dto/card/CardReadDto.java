@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,6 +23,6 @@ public class CardReadDto {
     private String holderName;
     private Date expiredDate;
     private Double balance;
-    private UUID ownerId;
+    private UserReadDto owner;
     private CardType type;
 }

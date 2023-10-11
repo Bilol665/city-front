@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -17,5 +18,8 @@ public class UserReadDto {
     private UUID id;
     private String name;
     private String email;
+    private List<RoleDto> roles;
+    private String state;
+    private int attempts;
 
 }

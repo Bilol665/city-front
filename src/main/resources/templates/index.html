@@ -14,20 +14,20 @@
 
   <title>Teaser</title>
 
-  <link rel="stylesheet" th:href="@{/teaser-html/css/reset.css}"> <!-- CSS reset -->
+  <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
   <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
-  <link rel="stylesheet" th:href="@{/teaser-html/css/demo.css}"> <!-- Demo style -->
+  <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
 
 
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/bootstrap.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
 
   <!-- fonts style -->
   <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link th:href="@{/teaser-html/css/style.css}" rel="stylesheet" />
+  <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
   <!-- responsive style -->
-  <link th:href="@{/teaser-html/css/responsive.css}" rel="stylesheet" />
+  <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -191,13 +191,13 @@
   <!-- find section -->
   <section class="find_section ">
     <div class="container">
-      <form action="/apartment/search" method="get">
+      <form action="/flat/search" method="post">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="number" class="form-control" placeholder="Search flat by number of rooms" name="numberOfFlats" value="0">
+            <input type="text" class="form-control" placeholder="Floors" name="floor">
           </div>
           <div class="col-md-5">
-            <input type="number" class="form-control" placeholder="Price" name="maxPrice" value="0">
+            <input type="text" class="form-control" placeholder="Number of rooms" name="numberOfFlats">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">

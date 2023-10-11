@@ -20,7 +20,9 @@ import uz.pdp.cityfront.repository.JwtTokenRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -79,20 +81,28 @@ public class UserService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ApiResponse4Jwt> entity = new HttpEntity<>(headers);
         ApiResponse4Jwt response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ApiResponse4Jwt.class).getBody();
-        UserReadDto user = getUserById(UUID.fromString(verificationDto.getUserId()));
+        UserReadDto user = getUserById(UUID.fromString(verificationDto.getUserId())).getDetails();
         assert response != null;
         JwtResponse data = response.getData();
         JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(user.getEmail()).orElse(null);
         if(token == null) return jwtTokenRepository.save(JwtTokenEntity.builder().token(data.getAccessToken()).username(user.getEmail()).build());
         else return jwtTokenRepository.save(JwtTokenEntity.builder().id(token.getId()).username(user.getEmail()).token(data.getAccessToken()).build());
     }
-    public UserReadDto getUserById(UUID id) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/id")
+    public UserResultDto getUserById(UUID id) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/details")
                 .queryParam("id", id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, UserReadDto.class).getBody();
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, UserResultDto.class).getBody();
+    }
+    public UserReadDto getUserByUsername(String username) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/user")
+                .queryParam("username",username);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(),HttpMethod.GET,entity,UserReadDto.class).getBody();
     }
 
     public void sendReset(String email) {
@@ -121,4 +131,13 @@ public class UserService {
     }
 
 
+    public String getRole(UserReadDto user) {
+        AtomicReference<String> result = new AtomicReference<>("");
+        user.getRoles().forEach((role) -> {
+            if(Objects.equals(role.getRole(),"ROLE_SUPER_ADMIN") && Objects.equals(result.toString(),"")) result.set("Super admin");
+            else if (Objects.equals(role.getRole(),"ROLE_ADMIN") && Objects.equals(result.toString(),"")) result.set("Admin");
+            else if (Objects.equals(role.getRole(),"ROLE_USER") && Objects.equals(result.toString(),"")) result.set("User");
+        });
+        return result.toString();
+    }
 }

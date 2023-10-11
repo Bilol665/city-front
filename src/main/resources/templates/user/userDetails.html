@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${company.name}"></title>
+    <title th:text="${user.details.name} + '\'s details'"></title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -80,7 +80,7 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-            <h3 th:text="${user.name}"></h3>
+            <h3 th:text="${user.details.name}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
@@ -104,8 +104,18 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-
-    <!-- end header section -->
+</div>
+<div class="outer-div">
+    <div id="details-div">
+        <h1>User details</h1>
+        <div style="margin-left: 20px">
+            <h2 th:text="'Name: ' + ${user.details.name}"></h2>
+            <br>
+            <h5>Companies: <a th:href="'/company/' + ${user.details.id}" th:text="${user.companies}" class="a-hrefs">  </a></h5>
+            <h5 th:text="'Apartments: ' + ${user.apartments}"></h5>
+            <h5 th:text="'Flats: ' + ${user.flats}"></h5>
+        </div>
+    </div>
 </div>
 </body>
 </html>

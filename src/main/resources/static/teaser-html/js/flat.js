@@ -1,53 +1,29 @@
-// Get references to the input and category suggestions
-const searchInput = document.getElementById('search-input');
-const categorySuggestions = document.getElementById('category-suggestions');
+let ascendingOrder = true; // Flag to track sorting order
 
-// Map of keywords and their corresponding categories
-const keywordToCategoryMap = {
-    laptops: 'Laptops',
-    phones: 'Phones',
-    monitors: 'Monitors',
-    // Add more keywords and categories as needed
-};
+function sortTable(columnIndex) {
+    if (columnIndex === 0) { // Check if it's the "Number" column (0-based index)
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
 
-// Function to display category suggestions based on user input
-function displayCategorySuggestions() {
-    const inputValue = searchInput.value.trim().toLowerCase();
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
 
-    // Clear the category suggestions
-    categorySuggestions.innerHTML = '';
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
 
-    // Check if the input matches any keywords
-    for (const keyword in keywordToCategoryMap) {
-        if (inputValue.length > 0) {
-            const category = keywordToCategoryMap[keyword];
-            const categoryItem = document.createElement('div');
-            const formElement = document.createElement('form');
-            formElement.setAttribute('action','/flat/search');
-            formElement.setAttribute('method','get');
-            categoryItem.appendChild(formElement);
-            categoryItem.textContent = `Search in ${category}`;
-            categoryItem.addEventListener('click', () => {
-                initiateCategorySearch(category);
-            });
-            categorySuggestions.appendChild(categoryItem);
-        }
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
+
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
+
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
     }
-
-    // Show the category suggestions if there are matches
-    if (categorySuggestions.children.length > 0) {
-        categorySuggestions.style.display = 'block';
-    } else {
-        // Hide the category suggestions if there are no matches
-        categorySuggestions.style.display = 'none';
-    }
-}
-
-// Event listener for input changes
-searchInput.addEventListener('input', displayCategorySuggestions);
-
-// Function to initiate a search within a category
-function initiateCategorySearch(category) {
-    // Replace this with your actual search logic within the specified category
-    alert(`Performing a search in category: ${category}`);
 }

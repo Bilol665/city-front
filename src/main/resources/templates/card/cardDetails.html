@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${company.name}"></title>
+    <title th:text="${card.number} + '\'s details'"></title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -106,6 +106,19 @@
     </script>
 
     <!-- end header section -->
+</div>
+    <div class="outer-div">
+    <div id="details-div">
+        <h1>Card details</h1>
+        <div>
+            <h2 th:text="'Number: ' + ${card.number}"></h2>
+            <br>
+            <h5 th:text="'Type: ' + ${card.type.name()}"></h5>
+            <h5 th:text="'Exprire date: ' + ${card.expiredDate}"></h5>
+            <h5 th:text="'Holder name: ' + ${card.holderName}"></h5>
+            <h5>Owner: <a class="a-hrefs" th:href="@{'/user/' + ${card.owner.id}}" th:text="${card.owner.name}"></a></h5>
+        </div>
+    </div>
 </div>
 </body>
 </html>

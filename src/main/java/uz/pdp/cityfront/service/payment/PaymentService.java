@@ -11,7 +11,6 @@ import uz.pdp.cityfront.domain.dto.card.CardReadDto;
 import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.repository.JwtTokenRepository;
-import uz.pdp.cityfront.service.user.UserService;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -63,5 +62,14 @@ public class PaymentService {
             // Handle the error case, e.g., throw an exception or return an empty list
             return Collections.emptyList();
         }
+    }
+
+    public CardReadDto getCard(UUID id, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userUrl + "/payment/api/v1/card/get/" + id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(),HttpMethod.GET,entity, CardReadDto.class).getBody();
     }
 }
