@@ -34,4 +34,56 @@ public class UserController {
         response.addCookie(Utils.createCookie("email",email));
         return "/user/userDetails";
     }
+    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
+    public String getAll(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("users",userService.getAll(token));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        return "/user/users";
+    }
+    @RequestMapping(value = "/block/{userId}",method = RequestMethod.GET)
+    public String block(
+            @PathVariable UUID userId,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("users",userService.getAll(token));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        userService.block(userId,token);
+        return "user/users";
+    }
+    @RequestMapping(value = "/unblock/{userId}",method = RequestMethod.GET)
+    public String unblock(
+            @PathVariable UUID userId,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("users",userService.getAll(token));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        userService.unblock(userId,token);
+        return "user/users";
+    }
 }

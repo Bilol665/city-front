@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${accommodation != null}" th:text="${accommodation.name}+'\'s flats'"></title>
-    <title th:if="${accommodation == null}">Search result</title>
+    <title>Users</title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -58,7 +57,7 @@
                 <a class="navbar-brand" href="/home">
                     <img th:src="@{/teaser-html/images/logo.png}" alt="" />
                 </a>
-                <div class="navbar-collapse" id="" >
+                <div class="navbar-collapse" id="">
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
                 <span class="s-1" style="background-color: dodgerblue">
@@ -116,58 +115,29 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-
-    <!-- end header section -->
-    <!-- slider section -->
-    <!--<section class="slider_section ">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 offset-md-1">
-                    <div class="detail-box">
-                        <h1>
-                            <span> Modern</span> <br>
-                            Apartment <br>
-                            House
-                        </h1>
-                        <p>
-                            It is a long established fact that a reader will be distracted by the readable content of
-                        </p>
-                        <div class="btn-box">
-                            <a href="" class="">
-                                Read More
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- end slider section -->
 </div>
+<p style="font-size: 16px; text-align: center">If nothing changed reload the page please.</p>
 <div class="outer-div">
     <table id="myTable">
         <thead>
         <tr>
-            <th onclick="sortTable(0)">Number<span class="asc"></span></th>
-            <th onclick="sortTable(1)">Which floor<span class="asc"></span></th>
-            <th onclick="sortTableAl(2)">Flat type</th>
-            <th onclick="sortTable(3)">Rooms</th>
-            <th onclick="sortTableAl(4)">Owner</th>
-            <th onclick="sortTable(5)">Price per month</th>
-            <th onclick="sortTable(6)">Full price</th>
-            <th onclick="sortTableAl(7)">About</th>
+            <th onclick="sortTableAl(0)">Name</th>
+            <th onclick="sortTableAl(1)">Email</th>
+            <th onclick="sortTableAl(2)">State</th>
+            <th onclick="sortTable(3)">Attempts</th>
+            <th onclick="sortTableAl(4)">Role</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="flat: ${flats}">
-            <td><a th:text="${flat.number}" th:href="@{'/flat/' + ${flat.id}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.whichFloor}"></td>
-            <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.rooms}"></td>
-            <td><a th:text="${flat.owner.name}" th:href="@{'/user/' + ${flat.owner.id}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.pricePerMonth}"></td>
-            <td th:text="${flat.fullPrice}"></td>
-            <td th:text="${flat.about}"></td>
+        <tr th:each="user1: ${users}">
+            <td><a th:text="${user1.name}" th:href="'/user/' + ${user.id}"></a></td>
+            <td th:text="${user1.email}"></td>
+            <td th:text="${user1.state}"></td>
+            <td th:text="${user1.attempts}"></td>
+            <td th:text="${user1.role}"></td>
+            <td th:if="${user1.state != 'BLOCKED'}"><a th:href="'/user/block/' + ${user1.id}">Block</a> </td>
+            <td th:if="${user1.state == 'BLOCKED'}"><a th:href="'/user/unblock/' + ${user1.id}">Unblock</a> </td>
         </tr>
         </tbody>
     </table>
@@ -177,29 +147,29 @@
 
     function sortTable(columnIndex) {
         // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
-            const table = document.getElementById("myTable");
-            const tbody = table.querySelector("tbody");
-            const rows = Array.from(tbody.getElementsByTagName("tr"));
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
 
-            rows.sort((a, b) => {
-                const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
-                const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
 
-                if (ascendingOrder) {
-                    return aValue - bValue;
-                } else {
-                    return bValue - aValue;
-                }
-            });
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
 
-            // Toggle the sorting order flag
-            ascendingOrder = !ascendingOrder;
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
 
-            // Remove existing rows from the tbody
-            rows.forEach(row => tbody.removeChild(row));
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
 
-            // Append the sorted rows back to the tbody
-            rows.forEach(row => tbody.appendChild(row));
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
         // }
     }
     function sortTableAl(n) {

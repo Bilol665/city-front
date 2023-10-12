@@ -62,9 +62,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>

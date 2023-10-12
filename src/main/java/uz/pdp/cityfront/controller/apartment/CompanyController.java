@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uz.pdp.cityfront.domain.dto.apartment.CompanyDto;
+import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.service.apartment.CompanyService;
 import uz.pdp.cityfront.service.user.UserService;
@@ -56,6 +57,22 @@ public class CompanyController {
         model.addAttribute("user",user);
         model.addAttribute("role",userService.getRole(user));
         model.addAttribute("user",userService.getUserById(id).getDetails());
+        return "/apartment/companies";
+    }
+    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
+    public String getAll(
+            HttpServletResponse response,
+            HttpServletRequest request,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("companies",companyService.getAllCompanies(new Filter(),token));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
         return "/apartment/companies";
     }
 }

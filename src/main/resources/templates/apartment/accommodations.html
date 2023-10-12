@@ -73,9 +73,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -101,7 +103,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -122,10 +124,10 @@
         <table id="myTable">
             <thead>
             <tr>
-                <th>Accommodation name</th>
-                <th>Company</th>
-                <th>Number of flats</th>
-                <th>Floors</th>
+                <th onclick="sortTableAl(0)">Accommodation name</th>
+                <th onclick="sortTableAl(1)">Company</th>
+                <th onclick="sortTable(2)">Number of flats</th>
+                <th onclick="sortTable(3)">Floors</th>
             </tr>
             </thead>
             <tbody class="table-body">
@@ -138,6 +140,93 @@
             </tbody>
         </table>
 </div>
-<script src="../../static/teaser-html/js/accommodation.js"></script>
+<script type="text/javascript">
+    let ascendingOrder = true; // Flag to track sorting order
+
+    function sortTable(columnIndex) {
+        // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
+
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
+
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
+
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
+
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
+        // }
+    }
+    function sortTableAl(n) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount ++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
 </body>
 </html>

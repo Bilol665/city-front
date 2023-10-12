@@ -1,11 +1,10 @@
 package uz.pdp.cityfront.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -18,10 +17,7 @@ import uz.pdp.cityfront.domain.entity.token.JwtTokenEntity;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.repository.JwtTokenRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -30,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UserService {
     private final RestTemplate restTemplate;
     private final JwtTokenRepository jwtTokenRepository;
+    private final ModelMapper modelMapper;
     @Value("${services.user-service}")
     private String userServiceUrl;
 
@@ -122,7 +119,7 @@ public class UserService {
     }
 
     public void changePassword(String email, ResetPasswordDto password,String token) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/api/v1/edit/changePassword/" + email);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/edit/changePassword/" + email);
         HttpHeaders headers = new HttpHeaders();
         headers.add("authorization","Bearer "+token);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -139,5 +136,41 @@ public class UserService {
             else if (Objects.equals(role.getRole(),"ROLE_USER") && Objects.equals(result.toString(),"")) result.set("User");
         });
         return result.toString();
+    }
+
+    public List<UserForHtml> getAll(String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/getAll");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization",token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<UserReadDto> users = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserReadDto>>() {
+        }).getBody();
+        List<UserForHtml> result = new ArrayList<>();
+        if(users != null) {
+            users.forEach((user) -> result.add(modelMapper.map(user, UserForHtml.class)));
+            for (int i=0;i<result.size();i++) {
+                result.get(i).setRole(getRole(users.get(i)));
+            }
+        }
+        return result;
+    }
+
+    public void block(UUID userId, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/block/" + userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, HttpStatus.class);
+    }
+
+    public void unblock(UUID userId, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/unblock/" + userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, HttpStatus.class);
     }
 }
