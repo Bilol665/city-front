@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import uz.pdp.cityfront.domain.dto.apartment.CompanyDto;
+import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.exceptions.MyException;
+import uz.pdp.cityfront.util.Utils;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +44,14 @@ public class CompanyService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("authorization","Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CompanyDto>>() {}).getBody();
+    }
+    public List<CompanyDto> getAllCompanies(Filter filter,String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/company/all");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<Filter> entity = new HttpEntity<>(filter,headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CompanyDto>>() {}).getBody();
     }
 }

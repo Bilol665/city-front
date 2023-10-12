@@ -93,4 +93,20 @@ public class FlatController {
         response.addCookie(Utils.createCookie("email",email));
         return "/apartment/flats";
     }
+    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
+    public String getAll(
+            HttpServletResponse response,
+            HttpServletRequest request,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("flats",flatService.search(new Filter(),token));
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        return "/apartment/flats";
+    }
 }
