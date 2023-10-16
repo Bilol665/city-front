@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.domain.dto.reader.JwtResponse;
 import uz.pdp.cityfront.domain.dto.response.ApiResponse;
 import uz.pdp.cityfront.domain.dto.response.ApiResponse4Jwt;
@@ -172,5 +173,15 @@ public class UserService {
         headers.set("authorization","Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, HttpStatus.class);
+    }
+
+    public List<InboxReadDto> getUserInbox(UserReadDto user,String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/inbox/get/" + user.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<Filter> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<InboxReadDto>>() {
+        }).getBody();
     }
 }

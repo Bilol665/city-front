@@ -1,4 +1,4 @@
-package uz.pdp.cityfront.domain.dto.user;
+package uz.pdp.cityfront.domain.dto.booking;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,10 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserForHtml {
-    private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String role;
-    private String state;
-    private int attempts;
+public class BookFlatDto {
+    private UUID flatId;
+    private String cardNumber;
 }

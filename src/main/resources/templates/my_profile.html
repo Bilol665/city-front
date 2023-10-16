@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${company.name}"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>My profile</title>
+
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -109,8 +118,21 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-
-    <!-- end header section -->
+</div>
+<div class="outer-div">
+    <div id="details-div">
+        <h1>My profile</h1>
+        <div>
+            <h4 th:text="'First name: ' + ${user.firstName}"></h4>
+            <h4 th:text="'Last name: ' + ${user.lastName}"></h4>
+            <h4 th:text="'Email: ' + ${user.email}"></h4>
+            <h4 th:text="'Login attempts: ' + ${user.attempts}"></h4>
+            <h4 th:text="'State: ' + ${user.state}"></h4>
+            <h4 th:text="'Role: ' + ${role}"></h4>
+            <a href="/edit-profile">Edit profile</a>
+            <a href="/auth/getPage/changePassword">Change password</a>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>

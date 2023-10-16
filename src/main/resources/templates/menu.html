@@ -79,10 +79,13 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu">
-            <h3 th:text="${user.name}"></h3>
+            <h3 th:text="${user.firstName}"></h3>
 <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -117,7 +120,7 @@
                             House
                         </h1>
                         <p>
-                            It is a long established fact that a reader will be distracted by the readable content of
+                            It is a long-established fact that a reader will be distracted by the readable content of
                         </p>
                         <div class="btn-box">
                             <a href="" class="">
@@ -212,7 +215,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -225,7 +228,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -238,7 +241,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -251,7 +254,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -264,7 +267,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -277,7 +280,7 @@
                 </div>
                 <div class="detail-box">
                     <h6>
-                        apertments house
+                        apartments house
                     </h6>
                     <p>
                         There are many variations of passages of Lorem Ipsum available, but
@@ -559,7 +562,7 @@
 
 <!-- end us section -->
 
-<!-- client secction -->
+<!-- client section -->
 
 <section class="client_section layout_padding">
     <div class="container-fluid">
@@ -795,7 +798,7 @@
                             <img th:src="@{/teaser-html/images/twitter.png}" alt="">
                         </a>
                         <a href="">
-                            <img th:{src="@{/teaser-html/images/linkedin.png}" alt="">
+                            <img th:src="@{/teaser-html/images/linkedin.png}" alt="">
                         </a>
                         <a href="">
                             <img th:src="@{/teaser-html/images/youtube.png}" alt="">

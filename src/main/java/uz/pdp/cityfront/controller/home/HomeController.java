@@ -37,14 +37,25 @@ public class HomeController {
             response.addCookie(Utils.createCookie("email",email));
             return "menu";
         } catch (MyException | ExpiredJwtException ex) {
-            return "session-expired";
+            return "login";
         } catch (Exception e) {
             return "index";
         }
     }
-    @RequestMapping(value = "/log",method = RequestMethod.GET)
-    public String login() {
-        return "login";
+    @GetMapping("/my-profile")
+    public String myProfile(
+            Model model,
+            HttpServletResponse response,
+            HttpServletRequest request
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        return "my_profile";
     }
     @GetMapping("/home" )
     public String home(
@@ -72,9 +83,10 @@ public class HomeController {
         response.addCookie(Utils.createCookie("token", token));
         response.addCookie(Utils.createCookie("email", email));
         UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("inboxes",userService.getUserInbox(user,token));
         model.addAttribute("user", user);
         model.addAttribute("role", userService.getRole(user));
-        return "menu";
+        return "user/inbox";
     }
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
     public String logout(

@@ -10,15 +10,11 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserForHtml {
+public class InboxReadDto {
     private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String role;
+    private String message;
     private String state;
-    private int attempts;
 }

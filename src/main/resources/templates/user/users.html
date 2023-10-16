@@ -91,10 +91,13 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-            <h3 th:text="${user.name}"></h3>
+            <h3 th:text="${user.firstName}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -131,7 +134,7 @@
         </thead>
         <tbody>
         <tr th:each="user1: ${users}">
-            <td><a th:text="${user1.name}" th:href="'/user/' + ${user.id}"></a></td>
+            <td><a th:text="${user1.firstName}" th:href="'/user/' + ${user.id}"></a></td>
             <td th:text="${user1.email}"></td>
             <td th:text="${user1.state}"></td>
             <td th:text="${user1.attempts}"></td>

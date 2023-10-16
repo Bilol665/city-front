@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${user != null}" th:text="${user.name} + '\'s companies'"></title>
+    <title th:if="${user != null}" th:text="${user.firstName} + '\'s companies'"></title>
     <title th:if="${user == null}">Companies</title>
   <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
   <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
@@ -91,10 +91,13 @@
       <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
     </div>
     <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-      <h3 th:text="${user.name}"></h3>
+      <h3 th:text="${user.firstName}"></h3>
       <!--            <br />-->
       <p th:text="${role}"></p>
       <ul>
+        <li>
+          <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+        </li>
         <li>
           <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
         </li>
@@ -135,7 +138,7 @@
     <tr th:each="company : ${companies}">
       <td><a th:text="${company.name}" th:href="'/company/get/' + ${company.id}"></a></td>
       <td th:text="${company.description}"></td>
-      <td><a class="a-hrefs" th:href="@{'/user/' + ${company.owner.id}}" th:text="${company.owner.name}"></a></td>
+      <td><a class="a-hrefs" th:href="@{'/user/' + ${company.owner.id}}" th:text="${company.owner.firstName}"></a></td>
       <td><a class="a-hrefs" th:href="@{'/card/' + ${company.card.id}}" th:text="${company.card.number}"></a></td>
     </tr>
     </tbody>
