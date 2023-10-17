@@ -3,10 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${flat.number} + '\'s flat'"></title>
-    <link rel="stylesheet" th:href="@{/teaser-html/css/accommodation/flatDetails.scss}"/>
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
+    <link
+            rel="stylesheet"
+            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
+            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+            crossorigin="anonymous"
+    />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
+    <style>
+        #details-div {
+            padding: 40px;
+            width: 450px;
+            background-color: white;
+            border: 5px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        .outer-div {
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+        }
+        /* Style the button that is used to open and close the collapsible content */
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 5px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+
+        /* Style the collapsible content. Note: hidden by default */
+        .content {
+            font-size: 16px;
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-<div class="hero_area">
+<div class="hero_area" style="background-image: none">
     <header class="header_section">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg custom_nav-container">
@@ -16,13 +77,13 @@
                 <div class="navbar-collapse" id="">
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
-                <span class="s-1">
+                <span class="s-1" style="background-color: dodgerblue">
 
                 </span>
-                            <span class="s-2">
+                            <span class="s-2" style="background-color: dodgerblue">
 
                 </span>
-                            <span class="s-3">
+                            <span class="s-3" style="background-color: dodgerblue">
 
                 </span>
                         </button>
@@ -30,9 +91,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -41,14 +104,17 @@
         </div>
     </header>
     <div class="action" style="margin-top: 50px">
-        <div class="profile" onclick="menuToggle();">
+        <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
-        <div class="menu">
-            <h3 th:text="${user.name}"></h3>
+        <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <h3 th:text="${user.firstName}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -58,7 +124,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -71,33 +137,55 @@
     </script>
 
     <!-- end header section -->
-    <!-- slider section -->
-    <section class="slider_section ">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 offset-md-1">
-                    <div class="detail-box">
-                        <h1>
-                            <span> Modern</span> <br>
-                            Apartment <br>
-                            House
-                        </h1>
-                        <p>
-                            It is a long established fact that a reader will be distracted by the readable content of
-                        </p>
-                        <div class="btn-box">
-                            <a href="" class="">
-                                Read More
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+</div>
+<div class="outer-div">
+    <div id="details-div">
+        <h1>Flat details</h1>
+        <div>
+            <h2 th:text="'Number: ' + ${flat.number}"></h2>
+            <br>
+            <h5 th:text="'Type: ' + ${flat.flatType}"></h5>
+            <h5 th:text="'Which floor: ' + ${flat.whichFloor}"></h5>
+            <h5 th:text="'Number of rooms: ' + ${flat.rooms}"></h5>
+            <h5 th:text="'Status: ' + ${flat.status}"></h5>
+            <h5>Owner: <a class="a-hrefs" th:href="@{'/user/' + ${flat.owner.id}}" th:text="${flat.owner.firstName}"></a></h5>
+            <h5 th:text="'About: ' + ${flat.about}"></h5>
+            <h5 th:text="'Price per month: ' + ${flat.pricePerMonth}"></h5>
+            <h5 th:text="'Full price: ' + ${flat.fullPrice}"></h5>
+            <button style="display: inline-flex" type="button" class="collapsible">Buy</button>
+            <form action="/booking/flat/buy" method="post" class="content">
+                <input type="hidden" th:value="${flat.id}" name="flatId">
+                <input type="text" name="cardNumber" placeholder="Card Number">
+                <button>Buy</button>
+            </form>
+            <button style="display: inline-flex" type="button" class="collapsible">Book</button>
+            <form action="/booking/flat" method="post" class="content">
+                <input type="hidden" th:value="${flat.id}" name="flatId">
+                <input type="text" name="cardNumber" placeholder="Card Number">
+                <button>Book</button>
+            </form>
+            <p th:if="${message != null}" th:text="${message}" style="font-size: 16px"></p>
         </div>
-    </section>
-    <!-- end slider section -->
+    </div>
 </div>
-<div>
-</div>
+<script>
+    const coll = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+<script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
 </body>
 </html>

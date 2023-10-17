@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Apartments</title>
+    <title th:text="${user.firstName} + '\'s inbox'"></title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -29,6 +29,7 @@
             font-size: 16px;
             background-color: white;
             border-collapse: collapse;
+            margin-bottom: 37px;
         }
 
         #myTable th, td {
@@ -56,7 +57,7 @@
                 <a class="navbar-brand" href="/home">
                     <img th:src="@{/teaser-html/images/logo.png}" alt="" />
                 </a>
-                <div class="navbar-collapse" id="">
+                <div class="navbar-collapse" id="" >
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
                 <span class="s-1" style="background-color: dodgerblue">
@@ -120,28 +121,22 @@
 
     <!-- end header section -->
 </div>
-<div class="outer-div" th:if="${accommodations.isEmpty()}">
-    <p>No accommodations available</p>
-</div>
-<div class="outer-div" th:if="${!accommodations.isEmpty()}">
-        <table id="myTable">
-            <thead>
-            <tr>
-                <th onclick="sortTableAl(0)">Accommodation name</th>
-                <th onclick="sortTableAl(1)">Company</th>
-                <th onclick="sortTable(2)">Number of flats</th>
-                <th onclick="sortTable(3)">Floors</th>
-            </tr>
-            </thead>
-            <tbody class="table-body">
-            <tr th:each="accommodation : ${accommodations}">
-                <td><a class="a-hrefs" th:href="@{'/apartment/get/acc/'+${accommodation.getId()}}" th:text="${accommodation.name}"></a></td>
-                <td><a class="a-hrefs" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}" th:text="${accommodation.company.name}"></a></td>
-                <td th:text="${accommodation.numberOfFlats}"></td>
-                <td th:text="${accommodation.floors}"></td>
-            </tr>
-            </tbody>
-        </table>
+<div class="outer-div">
+    <p th:if="${inboxes.isEmpty()}" style="text-align: center;font-size: 16px">Your inbox is empty</p>
+    <table th:if="${!inboxes.isEmpty()}" id="myTable">
+        <thead>
+        <tr>
+            <th onclick="sortTableAl(0)">Message</th>
+            <th onclick="sortTableAl(1)">State</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inbox: ${inboxes}">
+            <td th:text="${inbox.message}"></td>
+            <td th:text="${inbox.state}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript">
     let ascendingOrder = true; // Flag to track sorting order

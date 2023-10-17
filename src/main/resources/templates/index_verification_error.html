@@ -65,10 +65,12 @@
             </div>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <a href="index.html">HOME</a>
+                <a href="/home">HOME</a>
+                <a href="/apartment/getAll">APARTMENTS</a>
+                <a href="/flat/getAll">FLATS</a>
+                <a href="/company/getAll">COMPANIES</a>
+                <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                 <a href="about.html">ABOUT</a>
-                <a href="house.html">HOUSE</a>
-                <a href="price.html">PRICING</a>
                 <a href="contact.html">CONTACT US</a>
               </div>
             </div>
@@ -173,7 +175,7 @@
                 House
               </h1>
               <p>
-                It is a long established fact that a reader will be distracted by the readable content of
+                It is a long-established fact that a reader will be distracted by the readable content of
               </p>
               <div class="btn-box">
                 <a href="" class="">
@@ -851,7 +853,7 @@
                 <img th:src="@{/teaser-html/images/twitter.png}" alt="">
               </a>
               <a href="">
-                <img th:{src="@{/teaser-html/images/linkedin.png}" alt="">
+                <img th:src="@{/teaser-html/images/linkedin.png}" alt="">
               </a>
               <a href="">
                 <img th:src="@{/teaser-html/images/youtube.png}" alt="">

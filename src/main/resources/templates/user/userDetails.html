@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.details.name} + '\'s details'"></title>
+    <title th:text="${user.details.firstName} + '\'s details'"></title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -65,9 +65,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -80,10 +82,13 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-            <h3 th:text="${user.details.name}"></h3>
+            <h3 th:text="${user.details.firstName}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -93,7 +98,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -109,13 +114,16 @@
     <div id="details-div">
         <h1>User details</h1>
         <div style="margin-left: 20px">
-            <h2 th:text="'Name: ' + ${user.details.name}"></h2>
+            <h2 th:text="'Name: ' + ${user.details.firstName}"></h2>
             <br>
-            <h5>Companies: <a th:href="'/company/' + ${user.details.id}" th:text="${user.companies}" class="a-hrefs">  </a></h5>
-            <h5 th:text="'Apartments: ' + ${user.apartments}"></h5>
-            <h5 th:text="'Flats: ' + ${user.flats}"></h5>
+            <h4>Companies: <a th:href="'/company/' + ${user.details.id}" th:text="${user.companies}" class="a-hrefs">  </a></h4>
+            <h4 th:text="'Apartments: ' + ${user.apartments}"></h4>
+            <h4 th:text="'Flats: ' + ${user.flats}"></h4>
         </div>
     </div>
 </div>
+<script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
 </body>
 </html>

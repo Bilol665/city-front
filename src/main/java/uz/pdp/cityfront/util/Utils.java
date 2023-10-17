@@ -1,7 +1,9 @@
 package uz.pdp.cityfront.util;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Objects;
 
@@ -25,5 +27,18 @@ public class Utils {
 
             }
         }
+    }
+    public static void removeCookies(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                removeCookie(response, cookie.getName());
+            }
+        }
+    }
+    public static void removeCookie(HttpServletResponse response, String name) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

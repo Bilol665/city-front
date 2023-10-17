@@ -65,10 +65,12 @@
             </div>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <a href="index.html">HOME</a>
+                <a href="/home">HOME</a>
+                <a href="/apartment/getAll">APARTMENTS</a>
+                <a href="/flat/getAll">FLATS</a>
+                <a href="/company/getAll">COMPANIES</a>
+                <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                 <a href="about.html">ABOUT</a>
-                <a href="house.html">HOUSE</a>
-                <a href="price.html">PRICING</a>
                 <a href="contact.html">CONTACT US</a>
               </div>
             </div>
@@ -162,7 +164,7 @@
 
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section ">
+    <section class="slider_section " style="height: 500px">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-4 offset-md-1">
@@ -173,13 +175,13 @@
                 House
               </h1>
               <p>
-                It is a long established fact that a reader will be distracted by the readable content of
+                It is a long-established fact that a reader will be distracted by the readable content of
               </p>
-              <div class="btn-box">
-                <a href="" class="">
-                  Read More
-                </a>
-              </div>
+<!--              <div class="btn-box">-->
+<!--                <a href="" class="">-->
+<!--                  Read More-->
+<!--                </a>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -189,7 +191,7 @@
   </div>
 
   <!-- find section -->
-  <section class="find_section ">
+ <!-- <section class="find_section ">
     <div class="container">
       <form action="/flat/search" method="post">
         <div class=" form-row">
@@ -208,7 +210,7 @@
 
       </form>
     </div>
-  </section>
+  </section>-->
 
   <!-- end find section -->
 
@@ -238,9 +240,9 @@
               in
               some form, by injected humour, or randomised words
             </p>
-            <a href="">
-              Read More
-            </a>
+<!--            <a href="">-->
+<!--              Read More-->
+<!--            </a>-->
           </div>
         </div>
       </div>
@@ -342,9 +344,9 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
-          Find More
-        </a>
+<!--        <a href="">-->
+<!--          Find More-->
+<!--        </a>-->
       </div>
     </div>
   </section>
@@ -401,9 +403,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            <a href="">-->
+<!--              Buy Now-->
+<!--            </a>-->
           </div>
         </div>
         <div class="box">
@@ -443,9 +445,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            `<a href="">-->
+<!--              Buy Now-->
+<!--            </a>`-->
           </div>
         </div>
         <div class="box">
@@ -485,9 +487,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            <a href="">-->
+<!--              Buy Now-->
+<!--            </a>-->
           </div>
         </div>
       </div>
@@ -512,9 +514,9 @@
               in
               some form, by injected humour, or randomised words which don't look even slightly believable.
             </p>
-            <a href="">
-              Get A Quote
-            </a>
+<!--            <a href="">-->
+<!--              Get A Quote-->
+<!--            </a>-->
           </div>
         </div>
         <div class="col-md-6">
@@ -606,9 +608,9 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
-          Get A Quote
-        </a>
+<!--        <a href="">-->
+<!--          Get A Quote-->
+<!--        </a>-->
       </div>
     </div>
   </section>
@@ -698,7 +700,7 @@
 
   <!-- contact section -->
 
-  <section class="contact_section ">
+ <!-- <section class="contact_section ">
     <div class="container">
       <div class="heading_container">
         <h2>
@@ -741,7 +743,7 @@
 
       </div>
     </div>
-  </section>
+  </section>-->
 
   <!-- end contact section -->
 
@@ -851,7 +853,7 @@
                 <img th:src="@{/teaser-html/images/twitter.png}" alt="">
               </a>
               <a href="">
-                <img th:{src="@{/teaser-html/images/linkedin.png}" alt="">
+                <img th:src="@{/teaser-html/images/linkedin.png}" alt="">
               </a>
               <a href="">
                 <img th:src="@{/teaser-html/images/youtube.png}" alt="">
@@ -870,8 +872,8 @@
   <section class="container-fluid footer_section ">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear"></span> All Rights Reserved By Rental Management
+<!--        <a href="https://html.design/">Free Html Templates</a>-->
       </p>
     </div>
   </section>

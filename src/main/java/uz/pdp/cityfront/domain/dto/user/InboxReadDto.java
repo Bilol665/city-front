@@ -6,21 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserReadDto {
+public class InboxReadDto {
     private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private List<RoleDto> roles;
+    private String message;
     private String state;
-    private int attempts;
-
 }

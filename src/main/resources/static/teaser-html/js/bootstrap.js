@@ -4087,7 +4087,7 @@
       _proto._transitionComplete = function _transitionComplete(element, active, callback) {
         if (active) {
           $(active).removeClass(ClassName$9.ACTIVE);
-          var dropdownChild = $(active.parentNode).find(Selector$9.DROPDOWN_ACTIVE_CHILD)[0];
+          const dropdownChild = $(active.parentNode).find(Selector$9.DROPDOWN_ACTIVE_CHILD)[0];
 
           if (dropdownChild) {
             $(dropdownChild).removeClass(ClassName$9.ACTIVE);

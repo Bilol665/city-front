@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -14,13 +13,12 @@ import java.util.UUID;
 @Setter
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserReadDto {
+public class UserForHtml {
     private UUID id;
     private String firstName;
     private String lastName;
     private String email;
-    private List<RoleDto> roles;
+    private String role;
     private String state;
     private int attempts;
-
 }

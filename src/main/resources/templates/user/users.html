@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Apartments</title>
+    <title>Users</title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -29,6 +29,7 @@
             font-size: 16px;
             background-color: white;
             border-collapse: collapse;
+            margin-bottom: 37px;
         }
 
         #myTable th, td {
@@ -117,31 +118,32 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-
-    <!-- end header section -->
 </div>
-<div class="outer-div" th:if="${accommodations.isEmpty()}">
-    <p>No accommodations available</p>
-</div>
-<div class="outer-div" th:if="${!accommodations.isEmpty()}">
-        <table id="myTable">
-            <thead>
-            <tr>
-                <th onclick="sortTableAl(0)">Accommodation name</th>
-                <th onclick="sortTableAl(1)">Company</th>
-                <th onclick="sortTable(2)">Number of flats</th>
-                <th onclick="sortTable(3)">Floors</th>
-            </tr>
-            </thead>
-            <tbody class="table-body">
-            <tr th:each="accommodation : ${accommodations}">
-                <td><a class="a-hrefs" th:href="@{'/apartment/get/acc/'+${accommodation.getId()}}" th:text="${accommodation.name}"></a></td>
-                <td><a class="a-hrefs" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}" th:text="${accommodation.company.name}"></a></td>
-                <td th:text="${accommodation.numberOfFlats}"></td>
-                <td th:text="${accommodation.floors}"></td>
-            </tr>
-            </tbody>
-        </table>
+<p style="font-size: 16px; text-align: center">If nothing changed reload the page please.</p>
+<div class="outer-div">
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th onclick="sortTableAl(0)">Name</th>
+            <th onclick="sortTableAl(1)">Email</th>
+            <th onclick="sortTableAl(2)">State</th>
+            <th onclick="sortTable(3)">Attempts</th>
+            <th onclick="sortTableAl(4)">Role</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user1: ${users}">
+            <td><a th:text="${user1.firstName}" th:href="'/user/' + ${user.id}"></a></td>
+            <td th:text="${user1.email}"></td>
+            <td th:text="${user1.state}"></td>
+            <td th:text="${user1.attempts}"></td>
+            <td th:text="${user1.role}"></td>
+            <td th:if="${user1.state != 'BLOCKED'}"><a th:href="'/user/block/' + ${user1.id}">Block</a> </td>
+            <td th:if="${user1.state == 'BLOCKED'}"><a th:href="'/user/unblock/' + ${user1.id}">Unblock</a> </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript">
     let ascendingOrder = true; // Flag to track sorting order

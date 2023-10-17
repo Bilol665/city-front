@@ -25,6 +25,14 @@
     <!-- responsive style -->
     <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
     <style>
+        #details-div {
+            padding: 40px;
+            width: 450px;
+            background-color: white;
+            border: 5px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
         .myTable {
             font-size: 16px;
             background-color: white;
@@ -46,9 +54,31 @@
         tr:nth-child(n+7) {
             display: none;
         }
-        /*body {*/
-        /*    background-color: lightskyblue;*/
-        /*}*/
+        /* Style the button that is used to open and close the collapsible content */
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+
+        /* Style the collapsible content. Note: hidden by default */
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
@@ -76,9 +106,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -91,10 +123,13 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-            <h3 th:text="${user.name}"></h3>
+            <h3 th:text="${user.firstName}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -104,7 +139,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -133,17 +168,17 @@
                 <table class="myTable">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>Which floor</th>
-                        <th>Flat type</th>
-                        <th>Rooms</th>
+                        <th onclick="sortTable(0)">Number</th>
+                        <th onclick="sortTable(1)">Which floor</th>
+                        <th onclick="sortTableAl(2)">Flat type</th>
+                        <th onclick="sortTable(3)">Rooms</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="flat: ${flats}">
-                        <td th:text="${flat.number}"></td>
+                        <td><a th:text="${flat.number}" th:href="@{'/flat/' + ${flat.id}}" class="a-hrefs"></a></td>
                         <td th:text="${flat.whichFloor}"></td>
-                        <td th:text="${flat.flatType}"></td>
+                        <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
                         <td th:text="${flat.rooms}"></td>
                     </tr>
                     </tbody>
@@ -162,9 +197,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="flat: ${flats}">
-                        <td th:text="${flat.number}"></td>
+                        <td><a th:text="${flat.number}" th:href="@{'/flat/' + ${flat.id}}" class="a-hrefs"></a></td>
                         <td th:text="${flat.whichFloor}"></td>
-                        <td th:text="${flat.flatType}"></td>
+                        <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
                         <td th:text="${flat.rooms}"></td>
                     </tr>
                     </tbody>
@@ -189,5 +224,93 @@
         });
     }
 </script>
+<script type="text/javascript">
+    let ascendingOrder = true; // Flag to track sorting order
+
+    function sortTable(columnIndex) {
+        // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
+
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
+
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
+
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
+
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
+        // }
+    }
+    function sortTableAl(n) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount ++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
 </body>
 </html>

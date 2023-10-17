@@ -75,9 +75,11 @@
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
                             <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                             <a href="about.html">ABOUT</a>
-                            <a href="house.html">HOUSE</a>
-                            <a href="price.html">PRICING</a>
                             <a href="contact.html">CONTACT US</a>
                         </div>
                     </div>
@@ -90,10 +92,13 @@
             <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
         </div>
         <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-            <h3 th:text="${user.name}"></h3>
+            <h3 th:text="${user.firstName}"></h3>
             <!--            <br />-->
             <p th:text="${role}"></p>
             <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                </li>
                 <li>
                     <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
                 </li>
@@ -103,7 +108,7 @@
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a th:href="@{index.html}">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -128,7 +133,7 @@
                             House
                         </h1>
                         <p>
-                            It is a long established fact that a reader will be distracted by the readable content of
+                            It is a long-established fact that a reader will be distracted by the readable content of
                         </p>
                         <div class="btn-box">
                             <a href="" class="">
@@ -162,7 +167,7 @@
             <td th:text="${flat.whichFloor}"></td>
             <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
             <td th:text="${flat.rooms}"></td>
-            <td><a th:text="${flat.owner.name}" th:href="@{'/user/' + ${flat.owner.id}}" class="a-hrefs"></a></td>
+            <td><a th:text="${flat.owner.firstName}" th:href="@{'/user/' + ${flat.owner.id}}" class="a-hrefs"></a></td>
             <td th:text="${flat.pricePerMonth}"></td>
             <td th:text="${flat.fullPrice}"></td>
             <td th:text="${flat.about}"></td>

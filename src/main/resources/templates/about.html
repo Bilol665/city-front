@@ -64,10 +64,12 @@
             </div>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <a href="index.html">HOME</a>
+                <a href="/home">HOME</a>
+                <a href="/apartment/getAll">APARTMENTS</a>
+                <a href="/flat/getAll">FLATS</a>
+                <a href="/company/getAll">COMPANIES</a>
+                <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
                 <a href="about.html">ABOUT</a>
-                <a href="house.html">HOUSE</a>
-                <a href="price.html">PRICING</a>
                 <a href="contact.html">CONTACT US</a>
               </div>
             </div>
