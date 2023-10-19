@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${accommodation != null}" th:text="${accommodation.name}+'\'s flats'"></title>
-    <title th:if="${accommodation == null}">Search result</title>
+    <title>Add new company</title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -13,42 +12,19 @@
             integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
             crossorigin="anonymous"
     />
-    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet"/>
 
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}"/>
 
     <!-- fonts style -->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}"
+          rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet"/>
     <!-- responsive style -->
-    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
-    <style>
-        #myTable {
-            font-size: 16px;
-            background-color: white;
-            border-collapse: collapse;
-            margin-bottom: 37px;
-        }
-
-        #myTable th, td {
-            border: 1px solid black;
-            padding: 5px;
-        }
-        #myTable th:hover {
-            background: #c7c7c7;
-        }
-        .outer-div {
-            display: flex;
-            justify-content: center; /* Horizontally center */
-            align-items: center; /* Vertically center */
-        }
-        /*body {*/
-        /*    background-color: lightskyblue;*/
-        /*}*/
-    </style>
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="hero_area" style="background-image: none">
@@ -58,7 +34,7 @@
                 <a class="navbar-brand" href="/home">
                     <img th:src="@{/teaser-html/images/logo.png}" alt="" />
                 </a>
-                <div class="navbar-collapse" id="" >
+                <div class="navbar-collapse" id="">
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
                 <span class="s-1" style="background-color: dodgerblue">
@@ -121,90 +97,36 @@
     </script>
 
     <!-- end header section -->
-    <!-- slider section -->
-    <!--<section class="slider_section ">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 offset-md-1">
-                    <div class="detail-box">
-                        <h1>
-                            <span> Modern</span> <br>
-                            Apartment <br>
-                            House
-                        </h1>
-                        <p>
-                            It is a long-established fact that a reader will be distracted by the readable content of
-                        </p>
-                        <div class="btn-box">
-                            <a href="" class="">
-                                Read More
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- end slider section -->
 </div>
-<div class="outer-div">
-    <table id="myTable">
-        <thead>
-        <tr>
-            <th onclick="sortTable(0)">Number<span class="asc"></span></th>
-            <th onclick="sortTable(1)">Which floor<span class="asc"></span></th>
-            <th onclick="sortTableAl(2)">Flat type</th>
-            <th onclick="sortTableAl(3)">Status</th>
-            <th onclick="sortTable(4)">Rooms</th>
-            <th onclick="sortTableAl(5)">Owner</th>
-            <th onclick="sortTable(6)">Price per month</th>
-            <th onclick="sortTable(7)">Full price</th>
-            <th onclick="sortTableAl(8)">About</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="flat: ${flats}">
-            <td><a th:text="${flat.number}" th:href="@{'/flat/' + ${flat.id}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.whichFloor}"></td>
-            <td><a th:text="${flat.flatType}" th:href="@{'/flat/byType/' + ${flat.flatType}}" class="a-hrefs"></a></td>
-            <td><a th:text="${flat.status}" th:href="@{'/flat/byStatus/' + ${flat.status}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.rooms}"></td>
-            <td><a th:text="${flat.owner.firstName}" th:href="@{'/user/' + ${flat.owner.id}}" class="a-hrefs"></a></td>
-            <td th:text="${flat.pricePerMonth}"></td>
-            <td th:text="${flat.fullPrice}"></td>
-            <td th:text="${flat.about}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+
 <script type="text/javascript">
     let ascendingOrder = true; // Flag to track sorting order
 
     function sortTable(columnIndex) {
         // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
-            const table = document.getElementById("myTable");
-            const tbody = table.querySelector("tbody");
-            const rows = Array.from(tbody.getElementsByTagName("tr"));
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
 
-            rows.sort((a, b) => {
-                const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
-                const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
 
-                if (ascendingOrder) {
-                    return aValue - bValue;
-                } else {
-                    return bValue - aValue;
-                }
-            });
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
 
-            // Toggle the sorting order flag
-            ascendingOrder = !ascendingOrder;
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
 
-            // Remove existing rows from the tbody
-            rows.forEach(row => tbody.removeChild(row));
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
 
-            // Append the sorted rows back to the tbody
-            rows.forEach(row => tbody.appendChild(row));
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
         // }
     }
     function sortTableAl(n) {

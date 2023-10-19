@@ -127,13 +127,20 @@
         <thead>
         <tr>
             <th onclick="sortTableAl(0)">Message</th>
-            <th onclick="sortTableAl(1)">State</th>
+            <th onclick="sortTableAl(1)">Type</th>
+            <th onclick="sortTableAl(2)">From whom</th>
+            <th onclick="sortTableAl(3)">To</th>
+            <th onclick="sortTableAl(4)">State</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="inbox: ${inboxes}">
             <td th:text="${inbox.message}"></td>
+            <td th:text="${inbox.type}"></td>
+            <td><a th:text="${inbox.fromWhom.firstName}" th:href="'/user/' + ${inbox.fromWhom.id}"></a></td>
+            <td th:text="${inbox.toWhom.firstName}"></td>
             <td th:text="${inbox.state}"></td>
+            <td><a th:href="'/inbox/' + ${inbox.id}">View</a></td>
         </tr>
         </tbody>
     </table>

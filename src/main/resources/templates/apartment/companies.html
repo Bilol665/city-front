@@ -4,230 +4,322 @@
     <meta charset="UTF-8">
     <title th:if="${user != null}" th:text="${user.firstName} + '\'s companies'"></title>
     <title th:if="${user == null}">Companies</title>
-  <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
-  <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
-  <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
-  <link
-          rel="stylesheet"
-          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
-          integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-          crossorigin="anonymous"
-  />
-  <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
+    <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
+    <link
+            rel="stylesheet"
+            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
+            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+            crossorigin="anonymous"
+    />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet"/>
 
 
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}"/>
 
-  <!-- fonts style -->
-  <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
-  <style>
-    #myTable {
-      font-size: 16px;
-      background-color: white;
-      border-collapse: collapse;
-    }
+    <!-- fonts style -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}"
+          rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet"/>
+    <style>
+        #myTable {
+            margin-top: 35px;
+            font-size: 16px;
+            background-color: white;
+            border-collapse: collapse;
+        }
 
-    #myTable th, td {
-      border: 1px solid black;
-      padding: 5px;
-    }
-    #myTable th:hover {
-      background: #c7c7c7;
-    }
-    .outer-div {
-      display: flex;
-      justify-content: center; /* Horizontally center */
-      align-items: center; /* Vertically center */
-    }
-    /*body {*/
-    /*    background-color: lightskyblue;*/
-    /*}*/
-  </style>
+        #myTable th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        #myTable th:hover {
+            background: #c7c7c7;
+        }
+
+        .outer-div {
+            position: relative;
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+        }
+
+        #form {
+            position: absolute;
+            top: 0; /* Position it at the top */
+            right: auto;
+            display: inline-block;
+            padding: 2px 5px;
+            background-color: deepskyblue; /* Darker green */
+            color: white; /* Black text */
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #form:hover {
+            background-color: deepskyblue; /* Slightly lighter green on hover */
+        }
+
+        #addNewRow {
+            display: none;
+        }
+
+        /*body {*/
+        /*    background-color: lightskyblue;*/
+        /*}*/
+    </style>
 </head>
 <body>
 <div class="hero_area" style="background-image: none">
-  <header class="header_section">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="/home">
-          <img th:src="@{/teaser-html/images/logo.png}" alt="" />
-        </a>
-        <div class="navbar-collapse" id="">
-          <div class="custom_menu-btn">
-            <button onclick="openNav()">
+    <header class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="/home">
+                    <img th:src="@{/teaser-html/images/logo.png}" alt=""/>
+                </a>
+                <div class="navbar-collapse" id="">
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
                 <span class="s-1" style="background-color: dodgerblue">
 
                 </span>
-              <span class="s-2" style="background-color: dodgerblue">
+                            <span class="s-2" style="background-color: dodgerblue">
 
                 </span>
-              <span class="s-3" style="background-color: dodgerblue">
+                            <span class="s-3" style="background-color: dodgerblue">
 
                 </span>
-            </button>
-          </div>
-          <div id="myNav" class="overlay">
-            <div class="overlay-content">
-              <a href="/home">HOME</a>
-              <a href="/apartment/getAll">APARTMENTS</a>
-              <a href="/flat/getAll">FLATS</a>
-              <a href="/company/getAll">COMPANIES</a>
-              <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
-              <a href="about.html">ABOUT</a>
-              <a href="contact.html">CONTACT US</a>
-            </div>
-          </div>
+                        </button>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a href="/home">HOME</a>
+                            <a href="/apartment/getAll">APARTMENTS</a>
+                            <a href="/flat/getAll">FLATS</a>
+                            <a href="/company/getAll">COMPANIES</a>
+                            <a th:if="${role == 'Super admin'}" href="/user/getAll">USERS</a>
+                            <a href="about.html">ABOUT</a>
+                            <a href="contact.html">CONTACT US</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-      </nav>
+    </header>
+    <div class="action" style="margin-top: 50px">
+        <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
+        </div>
+        <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+            <h3 th:text="${user.firstName}"></h3>
+            <!--            <br />-->
+            <p th:text="${role}"></p>
+            <ul>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My
+                    profile</a>
+                </li>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}" alt="inbox"/><a
+                        href="/inbox">Inbox</a>
+                </li>
+                <li>
+                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"
+                         alt="Change password"/><a href="/auth/getPage/changePassword/">
+                    Change Password
+                </a>
+                </li>
+                <li>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}" alt="Logout"/><a href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </header>
-  <div class="action" style="margin-top: 50px">
-    <div class="profile" onclick="menuToggle();" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-      <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/>
-    </div>
-    <div class="menu" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
-      <h3 th:text="${user.firstName}"></h3>
-      <!--            <br />-->
-      <p th:text="${role}"></p>
-      <ul>
-        <li>
-          <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
-        </li>
-        <li>
-          <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
-        </li>
-        <li>
-          <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"  alt="Change password"/><a href="/auth/getPage/changePassword/">
-          Change Password
-        </a>
-        </li>
-        <li>
-          <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <script>
-    function menuToggle() {
-      const toggleMenu = document.querySelector(".menu");
-      toggleMenu.classList.toggle("active");
-    }
-  </script>
+    <script>
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active");
+        }
+    </script>
 
-  <!-- end header section -->
+    <!-- end header section -->
 </div>
 <div class="outer-div" th:if="${companies.isEmpty()}">
-  <p>No accommodations available</p>
+    <p>No accommodations available</p>
 </div>
 <div class="outer-div" th:if="${!companies.isEmpty()}">
-  <table id="myTable">
-    <thead>
-    <tr>
-      <th onclick="sortTableAl(0)">Company name</th>
-      <th onclick="sortTableAl(1)">Description</th>
-      <th onclick="sortTableAl(2)">Owner</th>
-      <th onclick="sortTableAl(3)">Card</th>
-    </tr>
-    </thead>
-    <tbody class="table-body">
-    <tr th:each="company : ${companies}">
-      <td><a th:text="${company.name}" th:href="'/company/get/' + ${company.id}"></a></td>
-      <td th:text="${company.description}"></td>
-      <td><a class="a-hrefs" th:href="@{'/user/' + ${company.owner.id}}" th:text="${company.owner.firstName}"></a></td>
-      <td><a class="a-hrefs" th:href="@{'/card/' + ${company.card.id}}" th:text="${company.card.number}"></a></td>
-    </tr>
-    </tbody>
-  </table>
+    <div>
+        <button id="form" type="button">Add new</button>
+        <form action="/company/add" method="post">
+            <table id="myTable">
+                <thead>
+                <tr>
+                    <th onclick="sortTableAl(0)">Company name</th>
+                    <th onclick="sortTableAl(1)">Description</th>
+                    <th onclick="sortTableAl(2)">Owner</th>
+                    <th onclick="sortTableAl(3)">Card</th>
+                </tr>
+                </thead>
+                <tbody class="table-body">
+                <tr th:each="company : ${companies}">
+                    <td><a th:text="${company.name}" th:href="'/company/get/' + ${company.id}"></a></td>
+                    <td th:text="${company.description}"></td>
+                    <td><a class="a-hrefs" th:href="@{'/user/' + ${company.owner.id}}"
+                           th:text="${company.owner.firstName}"></a>
+                    </td>
+                    <td><a class="a-hrefs" th:href="@{'/card/' + ${company.card.id}}"
+                           th:text="${company.card.number}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
-<script type="text/javascript">
-  let ascendingOrder = true; // Flag to track sorting order
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var cardsData = /*[[${cards}]]*/ '[]';
+    /*]]>*/
+    const cards = JSON.parse(cardsData);
+    let ascendingOrder = true; // Flag to track sorting order
+    document.getElementById("form").addEventListener("click", function () {
+        const table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
 
-  function sortTable(columnIndex) {
-    // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
-    const table = document.getElementById("myTable");
-    const tbody = table.querySelector("tbody");
-    const rows = Array.from(tbody.getElementsByTagName("tr"));
+        const newRow = table.insertRow();
 
-    rows.sort((a, b) => {
-      const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
-      const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+        // Create input fields for the new row
+        const cell1 = newRow.insertCell(0);
+        const input1 = document.createElement("input");
+        input1.type = "text";
+        input1.name = "name";
+        cell1.appendChild(input1);
 
-      if (ascendingOrder) {
-        return aValue - bValue;
-      } else {
-        return bValue - aValue;
-      }
+        const cell2 = newRow.insertCell(1);
+        const input2 = document.createElement("input");
+        input2.type = "text";
+        input2.name = "description";
+        cell2.appendChild(input2);
+
+        const cell3 = newRow.insertCell(2);
+        const input3 = document.createElement("input");
+        input3.type = "text";
+        input3.name = "owner";
+        cell3.appendChild(input3);
+
+        const cell4 = newRow.insertCell(3);
+        const selectElement = document.createElement("select");
+        selectElement.name = "card";
+
+        // Assuming you have a JavaScript variable 'cards' that holds your list of Card objects
+        cards.forEach(function(card) {
+            const option = document.createElement("option");
+            option.value = card.id; // Set the value of the option to the card's id
+            option.text = card.number; // Set the text of the option to the card's name
+            selectElement.appendChild(option);
+        });
+
+        cell4.appendChild(selectElement);
+
+        const cell5 = newRow.insertCell(4);
+        const button = document.createElement("button")
+
+        button.innerText = "Add";
+        cell5.appendChild(button);
     });
 
-    // Toggle the sorting order flag
-    ascendingOrder = !ascendingOrder;
 
-    // Remove existing rows from the tbody
-    rows.forEach(row => tbody.removeChild(row));
+    function sortTable(columnIndex) {
+        // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
+        const table = document.getElementById("myTable");
+        const tbody = table.querySelector("tbody");
+        const rows = Array.from(tbody.getElementsByTagName("tr"));
 
-    // Append the sorted rows back to the tbody
-    rows.forEach(row => tbody.appendChild(row));
-    // }
-  }
-  function sortTableAl(n) {
-    let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("myTable");
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc";
-    /* Make a loop that will continue until
-    no switching has been done: */
-    while (switching) {
-      // Start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /* Loop through all table rows (except the
-      first, which contains table headers): */
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (dir === "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir === "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-      if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        // Each time a switch is done, increase this count by 1:
-        switchcount ++;
-      } else {
-        /* If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again. */
-        if (switchcount === 0 && dir === "asc") {
-          dir = "desc";
-          switching = true;
-        }
-      }
+        rows.sort((a, b) => {
+            const aValue = parseInt(a.getElementsByTagName("td")[columnIndex].textContent);
+            const bValue = parseInt(b.getElementsByTagName("td")[columnIndex].textContent);
+
+            if (ascendingOrder) {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
+
+        // Toggle the sorting order flag
+        ascendingOrder = !ascendingOrder;
+
+        // Remove existing rows from the tbody
+        rows.forEach(row => tbody.removeChild(row));
+
+        // Append the sorted rows back to the tbody
+        rows.forEach(row => tbody.appendChild(row));
+        // }
     }
-  }
+
+    function sortTableAl(n) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
 </script>
 <script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>

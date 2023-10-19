@@ -26,7 +26,7 @@ public class PaymentService {
     @Value("${services.user-service}")
     private String userUrl;
 
-    public CardReadDto save(CardReadDto createCardDto,Principal principal) {
+    public CardReadDto save(CardReadDto createCardDto, Principal principal) {
         UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(userUrl + "payment/api/v1/card/save");
 
         HttpHeaders headers = new HttpHeaders();
@@ -34,27 +34,24 @@ public class PaymentService {
         HttpEntity<CardReadDto> entity = new HttpEntity<>(createCardDto, headers);
 
         JwtTokenEntity token = jwtTokenRepository.findJwtTokenEntitiesByUsername(principal.getName()).orElseThrow(() -> new MyException("Jwt not found!"));
-        headers.set("authorization","Bearer " + token.getToken());
+        headers.set("authorization", "Bearer " + token.getToken());
 
         try {
-            return restTemplate.exchange(uri.toUriString(),HttpMethod.POST,entity,CardReadDto.class).getBody();
-        }catch (RuntimeException e){
-            throw  new RuntimeException(e.getMessage());
+            return restTemplate.exchange(uri.toUriString(), HttpMethod.POST, entity, CardReadDto.class).getBody();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public List<CardReadDto> getCardUser(UUID ownerId) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userUrl + "/api/v1/card/getCard")
-                .queryParam("id",ownerId);
+    public List<CardReadDto> getCardUser(UUID ownerId, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userUrl + "/payment/api/v1/card/" + ownerId)
+                .queryParam("id", ownerId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization", "Bearer " + token);
         HttpEntity<CardReadDto> entity = new HttpEntity<>(headers);
-        ResponseEntity<List<CardReadDto>> responseEntity = restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                entity,
-                new ParameterizedTypeReference<List<CardReadDto>>() {}
-        );
+        ResponseEntity<List<CardReadDto>> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        });
 //        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, CardReadDto.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
@@ -68,8 +65,8 @@ public class PaymentService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userUrl + "/payment/api/v1/card/get/" + id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("authorization","Bearer " + token);
+        headers.set("authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(builder.toUriString(),HttpMethod.GET,entity, CardReadDto.class).getBody();
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, CardReadDto.class).getBody();
     }
 }

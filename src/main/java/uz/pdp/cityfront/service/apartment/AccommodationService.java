@@ -25,22 +25,23 @@ public class AccommodationService {
     private final UserService userService;
     @Value("${services.user-service}")
     private String apartmentURL;
+
     public List<AccommodationReadDto> search(Filter filter, String token) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apartmentURL + "/apartment/api/v1/accommodation/get/all");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("authorization","Bearer " + token);
-        HttpEntity<Filter> entity = new HttpEntity<>(filter,headers);
+        headers.set("authorization", "Bearer " + token);
+        HttpEntity<Filter> entity = new HttpEntity<>(filter, headers);
         ResponseEntity<List<AccommodationReadDto>> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<AccommodationReadDto>>() {
         });
         return exchange.getBody();
     }
 
-    public AccommodationReadDto getAcc(UUID accId,String token) {
+    public AccommodationReadDto getAcc(UUID accId, String token) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apartmentURL + "/apartment/api/v1/accommodation/get/byId/" + accId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("authorization","Bearer " + token);
+        headers.set("authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         try {
             return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, AccommodationReadDto.class).getBody();
@@ -48,5 +49,15 @@ public class AccommodationService {
             Utils.checkHttpStatus(e.getMessage());
             throw new MyException(e.getMessage());
         }
+    }
+
+    public List<AccommodationReadDto> getUserAcc(UUID userId, String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apartmentURL + "/apartment/api/v1/accommodation/get/" + userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("authorization", "Bearer " + token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<AccommodationReadDto>>() {
+        }).getBody();
     }
 }

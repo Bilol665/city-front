@@ -22,17 +22,17 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final UserService userService;
 
-    @GetMapping("/menu/{id}")
-    public String menu(
-            @PathVariable UUID id,
-            Model model
-    ){
-        UserReadDto user = userService.getUserById(id).getDetails();
-        List<CardReadDto>cards= paymentService.getCardUser(user.getId());
-            model.addAttribute("cards",cards);
-            model.addAttribute("id",user.getId());
-        return "menu";
-    }
+//    @GetMapping("/menu/{id}")
+//    public String menu(
+//            @PathVariable UUID id,
+//            Model model
+//    ){
+//        UserReadDto user = userService.getUserById(id).getDetails();
+//        List<CardReadDto>cards= paymentService.getCardUser(user.getId());
+//            model.addAttribute("cards",cards);
+//            model.addAttribute("id",user.getId());
+//        return "menu";
+//    }
     @GetMapping("/saveCard")
     public String save() {
         return "/card/cardSave";

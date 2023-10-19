@@ -17,4 +17,7 @@ public class InboxReadDto {
     private UUID id;
     private String message;
     private String state;
+    private String type;
+    private UserReadDto fromWhom;
+    private UserReadDto toWhom;
 }

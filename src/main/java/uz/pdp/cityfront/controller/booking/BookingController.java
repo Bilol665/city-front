@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import uz.pdp.cityfront.domain.dto.booking.BookFlatDto;
 import uz.pdp.cityfront.domain.dto.user.UserReadDto;
 import uz.pdp.cityfront.service.apartment.FlatService;
@@ -43,6 +44,7 @@ public class BookingController {
     }
     @RequestMapping(value = "/flat/buy",method = RequestMethod.POST)
     public String buyFlat(
+            @RequestParam(name = "cardNumber") String cardNumber,
             HttpServletResponse response,
             HttpServletRequest request,
             Model model,
@@ -56,7 +58,7 @@ public class BookingController {
         model.addAttribute("user",user);
         model.addAttribute("role",userService.getRole(user));
         model.addAttribute("flat",flatService.getFlat(bookFlatDto.getFlatId(), token));
-        String message = bookingService.buyFlat(bookFlatDto,token);
+        String message = bookingService.buyFlat(bookFlatDto,token,cardNumber);
         model.addAttribute("message", message == null ? "Error occurred" : message);
         return "apartment/flatDetails";
     }

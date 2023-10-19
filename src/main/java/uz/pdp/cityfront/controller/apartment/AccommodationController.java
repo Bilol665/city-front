@@ -77,5 +77,21 @@ public class AccommodationController {
         response.addCookie(Utils.createCookie("email",email));
         return "/apartment/accommodations";
     }
-
+    @RequestMapping(path = "/apartments/{userId}",method = RequestMethod.GET)
+    public String getUserApartments(
+            @PathVariable UUID userId,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model
+    ) {
+        String token = Utils.getCookie("token", request);
+        String email = Utils.getCookie("email", request);
+        response.addCookie(Utils.createCookie("token",token));
+        response.addCookie(Utils.createCookie("email",email));
+        UserReadDto user = userService.getUserByUsername(email);
+        model.addAttribute("user",user);
+        model.addAttribute("role",userService.getRole(user));
+        model.addAttribute("accommodations",accommodationService.getUserAcc(userId,token));
+        return "apartment/accommodations";
+    }
 }
