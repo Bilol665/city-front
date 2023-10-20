@@ -117,8 +117,8 @@
             <h2 th:text="'Name: ' + ${user.details.firstName}"></h2>
             <br>
             <h4>Companies: <a th:href="'/company/' + ${user.details.id}" th:text="${user.companies}" class="a-hrefs">  </a></h4>
-            <h4 th:text="'Apartments: ' + ${user.apartments}"></h4>
-            <h4 th:text="'Flats: ' + ${user.flats}"></h4>
+            <h4>Apartments: <a th:href="'/apartment/apartments/' + ${user.details.id}" th:text="${user.apartments}"></a></h4>
+            <h4>Flats: <a th:href="'/flat/flats/' + ${user.details.id}" th:text="${user.flats}"></a></h4>
         </div>
     </div>
 </div>

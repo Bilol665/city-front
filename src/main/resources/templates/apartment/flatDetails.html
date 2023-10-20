@@ -158,7 +158,7 @@
                 <input type="text" name="cardNumber" placeholder="Card Number">
                 <button>Buy</button>
             </form>
-            <button style="display: inline-flex" type="button" class="collapsible">Book</button>
+            <button style="display: inline-flex" type="button" class="collapsible" th:if="${flat.status == 'AVAILABLE'}">Book</button>
             <form action="/booking/flat" method="post" class="content">
                 <input type="hidden" th:value="${flat.id}" name="flatId">
                 <input type="text" name="cardNumber" placeholder="Card Number">

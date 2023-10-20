@@ -143,7 +143,7 @@ public class UserService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/get/getAll");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("authorization",token);
+        headers.set("authorization","Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         List<UserReadDto> users = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserReadDto>>() {
         }).getBody();
@@ -173,15 +173,5 @@ public class UserService {
         headers.set("authorization","Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         restTemplate.exchange(builder.toUriString(),HttpMethod.PUT,entity, HttpStatus.class);
-    }
-
-    public List<InboxReadDto> getUserInbox(UserReadDto user,String token) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(userServiceUrl + "/user/api/v1/inbox/get/" + user.getId());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("authorization","Bearer " + token);
-        HttpEntity<Filter> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<InboxReadDto>>() {
-        }).getBody();
     }
 }

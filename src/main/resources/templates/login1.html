@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- Basic -->
@@ -88,17 +88,17 @@
         </ul>
 
         <div class="cd-signin-modal__block js-signin-modal-block" data-type="login"> <!-- log in form -->
-          <form class="cd-signin-modal__form">
+          <form class="cd-signin-modal__form" action="/auth/login" method="post">
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">E-mail</label>
-              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail">
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail" name="email" >
               <span class="cd-signin-modal__error">Error message here!</span>
             </p>
 
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">Password</label>
-              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="text"  placeholder="Password">
-              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password"  placeholder="Password" name="password" >
+              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Show</a>
               <span class="cd-signin-modal__error">Error message here!</span>
             </p>
 
@@ -129,8 +129,8 @@
 
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
-              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="text"  placeholder="Password" name="password"required>
-              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password"  placeholder="Password" name="password" required>
+              <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Show</a>
             </p>
 
             <p class="cd-signin-modal__fieldset">
@@ -142,7 +142,7 @@
         <div class="cd-signin-modal__block js-signin-modal-block" data-type="reset"> <!-- reset password form -->
           <p class="cd-signin-modal__message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
 
-          <form class="cd-signin-modal__form">
+          <form class="cd-signin-modal__form" action="/auth/login">
             <p class="cd-signin-modal__fieldset">
               <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="reset-email">E-mail</label>
               <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="reset-email" type="email" placeholder="E-mail">
@@ -164,7 +164,7 @@
 
     <!-- end header section -->
     <!-- slider section -->
-    <section class="slider_section ">
+    <section class="slider_section " style="height: 500px">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-4 offset-md-1">
@@ -177,11 +177,11 @@
               <p>
                 It is a long-established fact that a reader will be distracted by the readable content of
               </p>
-              <div class="btn-box">
-                <a href="" class="">
-                  Read More
-                </a>
-              </div>
+<!--              <div class="btn-box">-->
+<!--                <a href="" class="">-->
+<!--                  Read More-->
+<!--                </a>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -191,15 +191,15 @@
   </div>
 
   <!-- find section -->
-  <section class="find_section ">
+ <!-- <section class="find_section ">
     <div class="container">
-      <form action="">
+      <form action="/flat/search" method="post">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Serach Your Categories ">
+            <input type="text" class="form-control" placeholder="Floors" name="floor">
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location ">
+            <input type="text" class="form-control" placeholder="Number of rooms" name="numberOfFlats">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">
@@ -210,7 +210,7 @@
 
       </form>
     </div>
-  </section>
+  </section>-->
 
   <!-- end find section -->
 
@@ -240,9 +240,9 @@
               in
               some form, by injected humour, or randomised words
             </p>
-            <a href="">
-              Read More
-            </a>
+<!--            <a href="">-->
+<!--              Read More-->
+<!--            </a>-->
           </div>
         </div>
       </div>
@@ -344,9 +344,9 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
-          Find More
-        </a>
+<!--        <a href="">-->
+<!--          Find More-->
+<!--        </a>-->
       </div>
     </div>
   </section>
@@ -403,9 +403,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            <a href="">-->
+<!--              Buy Now-->
+<!--            </a>-->
           </div>
         </div>
         <div class="box">
@@ -445,9 +445,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            `<a href="">-->
+<!--              Buy Now-->
+<!--            </a>`-->
           </div>
         </div>
         <div class="box">
@@ -487,9 +487,9 @@
             </div>
           </div>
           <div class="btn-box">
-            <a href="">
-              Buy Now
-            </a>
+<!--            <a href="">-->
+<!--              Buy Now-->
+<!--            </a>-->
           </div>
         </div>
       </div>
@@ -514,9 +514,9 @@
               in
               some form, by injected humour, or randomised words which don't look even slightly believable.
             </p>
-            <a href="">
-              Get A Quote
-            </a>
+<!--            <a href="">-->
+<!--              Get A Quote-->
+<!--            </a>-->
           </div>
         </div>
         <div class="col-md-6">
@@ -608,9 +608,9 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
-          Get A Quote
-        </a>
+<!--        <a href="">-->
+<!--          Get A Quote-->
+<!--        </a>-->
       </div>
     </div>
   </section>
@@ -700,7 +700,7 @@
 
   <!-- contact section -->
 
-  <section class="contact_section ">
+ <!-- <section class="contact_section ">
     <div class="container">
       <div class="heading_container">
         <h2>
@@ -743,7 +743,7 @@
 
       </div>
     </div>
-  </section>
+  </section>-->
 
   <!-- end contact section -->
 
@@ -872,8 +872,8 @@
   <section class="container-fluid footer_section ">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear"></span> All Rights Reserved By Rental Management
+<!--        <a href="https://html.design/">Free Html Templates</a>-->
       </p>
     </div>
   </section>
@@ -883,9 +883,6 @@
   <script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
   <script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
   <script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
-  <script type="text/javascript">
-    alert("Verification code incorrect!");
-  </script>
 
 
 </body>

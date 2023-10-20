@@ -28,8 +28,9 @@ public class BookingService {
         return "Booking failed";
     }
 
-    public String buyFlat(BookFlatDto bookFlatDto, String token) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/booking/buy/flat/" + bookFlatDto.getFlatId());
+    public String buyFlat(BookFlatDto bookFlatDto, String token,String cardNumber) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/booking/buy/flat/" + bookFlatDto.getFlatId())
+                .queryParam("cardNumber",cardNumber);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("authorization","Bearer " + token);

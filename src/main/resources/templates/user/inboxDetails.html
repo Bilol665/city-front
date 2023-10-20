@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${company.name}"></title>
+    <title>Inbox details</title>
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/reset.css}"> <!-- CSS reset -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/modal/style.css}"> <!-- Resource style -->
     <link rel="stylesheet" th:href="@{/teaser-html/css/styles/demo.css}"> <!-- Demo style -->
@@ -37,6 +37,13 @@
             display: flex;
             justify-content: center; /* Horizontally center */
             align-items: center; /* Vertically center */
+        }
+        .content {
+            font-size: 16px;
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -109,22 +116,44 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-
-    <!-- end header section -->
 </div>
 <div class="outer-div">
     <div id="details-div">
-        <h1>Company information</h1>
+        <h1>Inbox details</h1>
         <div style="margin-left: 20px">
-            <h2 th:text="'Name: '+${company.name}"></h2>
-            <br>
-            <h5>Owner: <a class="a-hrefs" th:href="@{'/user/' + ${company.owner.id}}" th:text="${company.owner.firstName}"></a></h5>
-            <h5>Card number: <a class="a-hrefs" th:href="@{'/card/' + ${company.card.id}}" th:text="${company.card.number}"></a></h5>
-            <h5 th:text="'Balance: ' + ${company.card.balance.intValue()} + '$'"></h5>
-            <h5 th:text="'Description: ' + ${company.description}"></h5>
+            <h3 th:text="'Message: ' + ${inbox.message}"></h3>
+            <h4>From: <a th:text="${inbox.fromWhom.firstName}" th:href="'/user/' + ${user.id}"></a></h4>
+            <h4 th:text="'To: ' + ${inbox.toWhom.firstName}"></h4>
+            <h4 th:text="'Type: ' + ${inbox.type}"></h4>
+            <h4 th:text="'State: ' + ${inbox.state}"></h4>
+            <a th:if="${inbox.type == 'BOOKING' && inbox.state != 'APPROVED'}" style="font-size: 12px" th:href="'/inbox/approve/' + ${inbox.id}">Approve</a>
+            <a th:if="${inbox.type == 'BOOKING' && inbox.state != 'APPROVED'}" style="font-size: 12px" th:href="'/inbox/reject/' + ${inbox.id}">Reject</a>
+            <button th:if="${inbox.type == 'PURCHASE' && inbox.state != 'APPROVED'}" style="font-size: 12px" class="collapsible">Approve</button>
+            <form class="content" th:action="'/inbox/purchase/' + ${inbox.id} + '/approve'" method="get">
+                <input name="cardNumber" type="text" placeholder="Card number">
+                <button>Approve</button>
+            </form>
+            <a th:if="${inbox.type == 'PURCHASE' && inbox.state != 'APPROVED'}" style="font-size: 12px" th:href="'/inbox/purchase/' + ${inbox.id} + '/reject'" class="collapsible">Reject</a>
+            <p th:if="${message != null}" th:text="${message}"></p>
         </div>
     </div>
 </div>
+<script>
+    const coll = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
 <script type="text/javascript" th:src="@{/teaser-html/js/jquery-3.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/teaser-html/js/bootstrap.js}"></script>
 <script type="text/javascript" th:src="@{/teaser-html/js/custom.js}"></script>
