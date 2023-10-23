@@ -40,6 +40,15 @@ public class FlatService {
         });
         return exchange.getBody();
     }
+    public List<FlatDto> getUsers(UUID userId,String token) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/flat/gt");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<FlatDto>>() {
+        }).getBody();
+    }
 
     public FlatDto getFlat(UUID id,String token) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/flat/get/" + id);

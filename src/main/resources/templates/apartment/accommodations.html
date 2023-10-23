@@ -12,20 +12,25 @@
             integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
             crossorigin="anonymous"
     />
-    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet" />
+    <link th:href="@{/teaser-html/css/menu/style.css}" rel="stylesheet"/>
 
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/teaser-html/css/styles/bootstrap.css}"/>
 
     <!-- fonts style -->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap}"
+          rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet" />
+    <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet"/>
     <!-- responsive style -->
-    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet" />
+    <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet"/>
+    <script th:if="${replace != null && replace}">
+        window.location.replace("/apartment/getAll")
+    </script>
     <style>
         #myTable {
+            margin-top: 35px;
             font-size: 16px;
             background-color: white;
             border-collapse: collapse;
@@ -35,17 +40,53 @@
             border: 1px solid black;
             padding: 5px;
         }
+
         #myTable th:hover {
             background: #c7c7c7;
         }
+
         .outer-div {
+            /*position: absolute;*/
             display: flex;
             justify-content: center; /* Horizontally center */
             align-items: center; /* Vertically center */
         }
-        /*body {*/
-        /*    background-color: lightskyblue;*/
-        /*}*/
+
+        #delete-form {
+            top: 0; /* Position it at the top */
+            right: auto;
+            display: inline-block;
+            padding: 2px 5px;
+            background-color: deepskyblue; /* Darker green */
+            color: white; /* Black text */
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #form {
+            top: 0; /* Position it at the top */
+            right: auto;
+            display: inline-block;
+            padding: 2px 5px;
+            background-color: deepskyblue; /* Darker green */
+            color: white; /* Black text */
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+        #form:hover {
+            background-color: deepskyblue; /* Slightly lighter green on hover */
+        }
+        body {
+            margin-bottom: 150px;
+        }
     </style>
 </head>
 <body>
@@ -54,7 +95,7 @@
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg custom_nav-container">
                 <a class="navbar-brand" href="/home">
-                    <img th:src="@{/teaser-html/images/logo.png}" alt="" />
+                    <img th:src="@{/teaser-html/images/logo.png}" alt=""/>
                 </a>
                 <div class="navbar-collapse" id="">
                     <div class="custom_menu-btn">
@@ -95,18 +136,21 @@
             <p th:text="${role}"></p>
             <ul>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My profile</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/avatar.jpg}" alt="Avatar"/><a href="/my-profile">My
+                    profile</a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}"  alt="inbox"/><a href="/inbox">Inbox</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/envelope.png}" alt="inbox"/><a
+                        href="/inbox">Inbox</a>
                 </li>
                 <li>
-                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"  alt="Change password"/><a href="/auth/getPage/changePassword/">
+                    <img id="changePasswordA" th:src="@{/teaser-html/css/menu/assets/icons/settings.png}"
+                         alt="Change password"/><a href="/auth/getPage/changePassword/">
                     Change Password
                 </a>
                 </li>
                 <li>
-                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}"  alt="Logout"/><a href="/logout">Logout</a>
+                    <img th:src="@{/teaser-html/css/menu/assets/icons/log-out.png}" alt="Logout"/><a href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -120,32 +164,113 @@
 
     <!-- end header section -->
 </div>
+<section class="listing-section">
 <div class="outer-div" th:if="${accommodations.isEmpty()}">
     <p>No accommodations available</p>
 </div>
 <div class="outer-div" th:if="${!accommodations.isEmpty()}">
-        <table id="myTable">
-            <thead>
-            <tr>
-                <th onclick="sortTableAl(0)">Accommodation name</th>
-                <th onclick="sortTableAl(1)">Company</th>
-                <th onclick="sortTable(2)">Number of flats</th>
-                <th onclick="sortTable(3)">Floors</th>
-            </tr>
-            </thead>
-            <tbody class="table-body">
-            <tr th:each="accommodation : ${accommodations}">
-                <td><a class="a-hrefs" th:href="@{'/apartment/get/acc/'+${accommodation.getId()}}" th:text="${accommodation.name}"></a></td>
-                <td><a class="a-hrefs" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}" th:text="${accommodation.company.name}"></a></td>
-                <td th:text="${accommodation.numberOfFlats}"></td>
-                <td th:text="${accommodation.floors}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div>
+        <div class="button-container">
+            <button id="form" type="button">Add new</button>
+            <button id="delete-form" type="button">Delete</button>
+        </div>
+        <form id="just-form" method="post">
+            <table id="myTable">
+                <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Number</th>
+                    <th onclick="sortTableAl(1)">Accommodation name</th>
+                    <th onclick="sortTableAl(2)">Company</th>
+                    <th onclick="sortTable(3)">Number of flats</th>
+                    <th onclick="sortTable(4)">Floors</th>
+                </tr>
+                </thead>
+                <tbody class="table-body">
+                <tr th:each="accommodation : ${accommodations}">
+                    <td th:text="${accommodation.number}"></td>
+                    <td><a class="a-hrefs" th:href="@{'/apartment/get/acc/'+${accommodation.getId()}}"
+                           th:text="${accommodation.name}"></a></td>
+                    <td><a class="a-hrefs" th:href="@{'/company/get/'+${accommodation.getCompany().getId()}}"
+                           th:text="${accommodation.company.name}"></a></td>
+                    <td th:text="${accommodation.numberOfFlats}"></td>
+                    <td th:text="${accommodation.floors}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
-<script type="text/javascript">
+</section>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var companiesData = /*[[${companies}]]*/ '[]';
+    /*]]>*/
+    const companies = JSON.parse(companiesData);
+    const form = document.getElementById("just-form");
     let ascendingOrder = true; // Flag to track sorting order
+    let isCheckboxAdded = false;
+    document.getElementById("form").addEventListener("click", function () {
+        const table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
 
+        const newRow = table.insertRow();
+
+        newRow.insertCell(0);
+
+
+        // Create input fields for the new row
+        const cell1 = newRow.insertCell(1);
+        const input1 = document.createElement("input");
+        input1.type = "text";
+        input1.name = "name";
+        cell1.appendChild(input1);
+
+        const cell2 = newRow.insertCell(2);
+        const selectElement = document.createElement("select");
+        selectElement.name = "companyId";
+
+        // Assuming you have a JavaScript variable 'cards' that holds your list of Card objects
+        companies.forEach(function (company) {
+            const option = document.createElement("option");
+            option.value = company.id; // Set the value of the option to the card's id
+            option.text = company.name; // Set the text of the option to the card's name
+            selectElement.appendChild(option);
+        });
+
+        cell2.appendChild(selectElement);
+
+
+        const cell5 = newRow.insertCell(3);
+        const button = document.createElement("button")
+
+        button.innerText = "Add Premium";
+        button.formAction = "/apartment/add/premium"
+        cell5.appendChild(button);
+
+        const cell6 = newRow.insertCell(4);
+        const button1 = document.createElement("button")
+
+        button1.innerText = "Add Eco";
+        button1.formAction = "/apartment/add/eco"
+        cell6.appendChild(button1);
+    });
+    document.getElementById("delete-form").addEventListener("click", function () {
+        const table = document.getElementById('myTable');
+        if(!isCheckboxAdded) {
+            // Loop through each row and add a cell with a checkbox
+            for (let i = 1; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const cell = row.insertCell(-1); // -1 adds a cell at the end of the row
+
+                // Create a new checkbox element
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+
+                // Append the checkbox to the cell
+                cell.appendChild(checkbox);
+                isCheckboxAdded = true;
+            }
+        }
+    });
     function sortTable(columnIndex) {
         // if (columnIndex === 0 || columnIndex === 1) { // Check if it's the "Number" column (0-based index)
         const table = document.getElementById("myTable");
@@ -173,6 +298,7 @@
         rows.forEach(row => tbody.appendChild(row));
         // }
     }
+
     function sortTableAl(n) {
         let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("myTable");
@@ -216,7 +342,7 @@
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 switching = true;
                 // Each time a switch is done, increase this count by 1:
-                switchcount ++;
+                switchcount++;
             } else {
                 /* If no switching has been done AND the direction is "asc",
                 set the direction to "desc" and run the while loop again. */

@@ -122,7 +122,7 @@ public class FlatController {
         UserReadDto user = userService.getUserByUsername(email);
         model.addAttribute("user",user);
         model.addAttribute("role",userService.getRole(user));
-        model.addAttribute("flats",flatService.search(new Filter(),token));
+        model.addAttribute("flats",flatService.getUsers(userId,token));
         response.addCookie(Utils.createCookie("token",token));
         response.addCookie(Utils.createCookie("email",email));
         return "apartment/flats";

@@ -14,6 +14,7 @@ import java.util.UUID;
 public class AccommodationReadDto {
     private UUID id;
     private String name;
+    private Long number;
     private LocationDto locationEntity;
     private CompanyDto company;
     private Integer numberOfFlats;

@@ -26,6 +26,9 @@
     <link th:href="@{/teaser-html/css/styles/style.css}" rel="stylesheet"/>
     <!-- responsive style -->
     <link th:href="@{/teaser-html/css/styles/responsive.css}" rel="stylesheet"/>
+    <script th:if="${replace != null && replace}">
+        window.location.replace("/company/getAll")
+    </script>
     <style>
         #myTable {
             margin-top: 35px;
@@ -44,7 +47,7 @@
         }
 
         .outer-div {
-            position: relative;
+            /*position: ;*/
             display: flex;
             justify-content: center; /* Horizontally center */
             align-items: center; /* Vertically center */
@@ -189,8 +192,14 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var cardsData = /*[[${cards}]]*/ '[]';
+    var userData = /*[[${userJSON}]]*/ '[]';
     /*]]>*/
     const cards = JSON.parse(cardsData);
+    const user = JSON.parse(userData);
+    userD = {
+        id : user.id,
+        firstName : user.firstName
+    }
     let ascendingOrder = true; // Flag to track sorting order
     document.getElementById("form").addEventListener("click", function () {
         const table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
@@ -210,15 +219,21 @@
         input2.name = "description";
         cell2.appendChild(input2);
 
-        const cell3 = newRow.insertCell(2);
+        // const cell3 = newRow.insertCell(2);
         const input3 = document.createElement("input");
-        input3.type = "text";
+        input3.type = "hidden";
         input3.name = "owner";
-        cell3.appendChild(input3);
+        input3.value = user.id;
+        // cell3.appendChild(input3);
+
+        const cell31 = newRow.insertCell(2);
+        const input31 = document.createElement("p");
+        input31.textContent = user.firstName;
+        cell31.appendChild(input31);
 
         const cell4 = newRow.insertCell(3);
         const selectElement = document.createElement("select");
-        selectElement.name = "card";
+        selectElement.name = "cardId";
 
         // Assuming you have a JavaScript variable 'cards' that holds your list of Card objects
         cards.forEach(function(card) {

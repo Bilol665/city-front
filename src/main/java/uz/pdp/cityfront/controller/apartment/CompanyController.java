@@ -29,7 +29,7 @@ public class CompanyController {
     private final UserService userService;
     private final PaymentService paymentService;
     private final ObjectMapper objectMapper;
-    @RequestMapping(path = "/add/",method = RequestMethod.POST)
+    @RequestMapping(path = "/add",method = RequestMethod.POST)
     public String addNewCompany(
             CompanyCreateDto companyCreateDto,
             HttpServletRequest request,
@@ -45,7 +45,9 @@ public class CompanyController {
         model.addAttribute("user",user);
         model.addAttribute("role",userService.getRole(user));
         model.addAttribute("companies",companyService.getCompanyByOwner(user.getId(),token));
+        model.addAttribute("replace",true);
         try {
+            model.addAttribute("userJSON",objectMapper.writeValueAsString(user));
             model.addAttribute("cards",new ObjectMapper().writeValueAsString(paymentService.getCardUser(user.getId(),token)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -101,6 +103,7 @@ public class CompanyController {
         model.addAttribute("user",user);
         model.addAttribute("role",userService.getRole(user));
         try {
+            model.addAttribute("userJSON",objectMapper.writeValueAsString(user));
             model.addAttribute("cards",objectMapper.writeValueAsString(paymentService.getCardUser(user.getId(),token)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -120,7 +123,8 @@ public class CompanyController {
         model.addAttribute("role",userService.getRole(user));
         model.addAttribute("companies",companyService.getAllCompanies(new Filter(),token));
         try {
-            model.addAttribute("cards",new ObjectMapper().writeValueAsString(paymentService.getCardUser(user.getId(),token)));
+            model.addAttribute("userJSON",objectMapper.writeValueAsString(user));
+            model.addAttribute("cards",objectMapper.writeValueAsString(paymentService.getCardUser(user.getId(),token)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
