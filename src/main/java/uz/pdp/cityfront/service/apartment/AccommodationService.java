@@ -7,7 +7,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import uz.pdp.cityfront.domain.dto.apartment.AccommodationCreateDto;
 import uz.pdp.cityfront.domain.dto.apartment.AccommodationReadDto;
+import uz.pdp.cityfront.domain.dto.apartment.LocationDto;
 import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.exceptions.MyException;
 import uz.pdp.cityfront.repository.JwtTokenRepository;
@@ -59,5 +61,25 @@ public class AccommodationService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<AccommodationReadDto>>() {
         }).getBody();
+    }
+
+    public void addPremium(AccommodationCreateDto accommodationCreateDto, String token) {
+        accommodationCreateDto.setLocationEntity(new LocationDto(12D,12D));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apartmentURL + "/apartment/api/v1/accommodation/add/premium");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<AccommodationCreateDto> entity = new HttpEntity<>(accommodationCreateDto,headers);
+        restTemplate.exchange(builder.toUriString(),HttpMethod.POST,entity,AccommodationReadDto.class);
+    }
+
+    public void addEco(AccommodationCreateDto accommodationCreateDto, String token) {
+        accommodationCreateDto.setLocationEntity(new LocationDto(12D,12D));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apartmentURL + "/apartment/api/v1/accommodation/add/economy");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("authorization","Bearer " + token);
+        HttpEntity<AccommodationCreateDto> entity = new HttpEntity<>(accommodationCreateDto,headers);
+        restTemplate.exchange(builder.toUriString(),HttpMethod.POST,entity,AccommodationReadDto.class);
     }
 }

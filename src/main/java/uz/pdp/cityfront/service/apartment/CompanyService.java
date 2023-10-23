@@ -12,6 +12,7 @@ import uz.pdp.cityfront.domain.dto.apartment.CompanyCreateDto;
 import uz.pdp.cityfront.domain.dto.apartment.CompanyDto;
 import uz.pdp.cityfront.domain.dto.filter.Filter;
 import uz.pdp.cityfront.exceptions.MyException;
+import uz.pdp.cityfront.service.payment.PaymentService;
 import uz.pdp.cityfront.util.Utils;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @Slf4j
 public class CompanyService {
     private final RestTemplate restTemplate;
+    private final PaymentService paymentService;
     @Value("${services.user-service}")
     private String url;
     public CompanyDto getCompany(UUID id,String token) {
@@ -57,6 +59,7 @@ public class CompanyService {
     }
 
     public CompanyDto addNewCompany(CompanyCreateDto companyCreateDto, String token) {
+        companyCreateDto.setBalance(paymentService.getCard(companyCreateDto.getCardId(),token).getBalance());
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url + "/apartment/api/v1/company/add");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

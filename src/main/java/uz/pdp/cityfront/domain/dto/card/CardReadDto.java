@@ -18,7 +18,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CardReadDto {
     private UUID id;
-    private LocalDateTime createdDate;
+    private Date createdDate;
     private String number;
     private String holderName;
     private Date expiredDate;
